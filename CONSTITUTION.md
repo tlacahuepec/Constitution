@@ -26,6 +26,7 @@ We build **robust, secure, maintainable, and high-quality software** using:
 7. CI must pass before any merge.
 
 ## 2. Version Control & Branching Strategy (GitFlow + Git Town)
+
 ```
 main      ← Production / stable releases (protected)
 dev       ← Integration branch (protected)
