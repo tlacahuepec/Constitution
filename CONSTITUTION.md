@@ -1,6 +1,6 @@
 # Engineering Constitution
 
-**Version 1.0** — May 2026  
+**Version 1.1** — May 2026  
 **Author**: tlacahuepec  
 **Applies to**: All repositories under tlacahuepec (any language or platform)
 
@@ -63,9 +63,10 @@ Every change requires a Pull Request.
 
 ## 4. CI/CD Requirements (Mandatory)
 
-Every repository **must** have `.github/workflows/ci.yml` that runs on:
-- Pull requests
-- Pushes to `dev`, `main`, `release/*`
+Every repository **must** have the following workflows:
+- `.github/workflows/ci.yml`
+- `.github/workflows/release.yml`
+- Language-specific files (`python-ci.yml`, `android-ci.yml`, etc.)
 
 **Minimum checks**:
 - Linting + formatting
@@ -73,14 +74,12 @@ Every repository **must** have `.github/workflows/ci.yml` that runs on:
 - Build / compile
 - Security / dependency scanning
 
-Release workflow (on tags) must create GitHub Release + publish artifacts.
-
 ## 5. Testing & Quality Standards
 
 - TDD mandatory
 - Tests must exist and pass before merge
 - Language-appropriate tools (pytest, JUnit, etc.)
-- Formatting & linting **enforced** in CI (Ruff, Spotless, ktlint, Prettier, clang-format, etc.)
+- Formatting & linting **enforced** in CI
 
 ## 6. Security & Secrets
 
@@ -97,10 +96,10 @@ Release workflow (on tags) must create GitHub Release + publish artifacts.
 
 ## 8. Technology-Specific Extensions
 
-(Expand as needed)
+See `docs/extensions.md` for details.
 
 **Python**  
-Ruff + pyright, Docker-first, provider pattern for external services.
+Ruff + pyright, Docker-first, provider pattern.
 
 **Android / Kotlin**  
 Jetpack Compose + Material 3, Hilt, Room, Spotless + ktlint + Detekt (mandatory), Git Town.
@@ -116,3 +115,25 @@ Agents **must** read this file first, follow TDD, use correct branch/PR conventi
 
 - Changes to this Constitution require a PR to **this** repository.
 - Violations block merges.
+
+## 11. Repository Setup & Branch Protection (One-time setup)
+
+**Every repository (including this one) must protect `main` and `dev`.**
+
+### How to protect `main` and `dev`
+
+1. Go to **Settings → Branches** in the GitHub repository.
+2. Click **“Add branch protection rule”**.
+3. In **Branch name pattern**, type `main` and click **Create**.
+4. Repeat the process and type `dev` and click **Create**.
+
+**Required settings for both branches**:
+- ✅ **Require a pull request before merging**
+- ✅ **Require status checks to pass before merging** (select all CI workflows)
+- ✅ **Require approval** (at least 1 reviewer)
+- ✅ **Do not allow force pushes**
+- (Recommended) **Require conversation resolution before merging**
+
+**After protecting**:
+- Create the `dev` branch from `main` if it doesn’t exist yet.
+- All future changes (including to this Constitution) **must** go through a PR.
