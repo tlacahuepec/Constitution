@@ -1,12 +1,15 @@
 ## Description
+
 Closes #XX
 
 <!-- Brief summary of what this PR does and why -->
 
 ## Changes Made
-- 
+
+- <!-- List changes here -->
 
 ## Checklist
+
 - [ ] I have read and followed the [Engineering Constitution](../CONSTITUTION.md)
 - [ ] Followed TDD (tests written and failing first)
 - [ ] All tests pass
@@ -16,4 +19,5 @@ Closes #XX
 - [ ] CI/CD pipeline is fully green
 
 ## Test Plan
+
 <!-- How you tested these changes (manual + automated) -->

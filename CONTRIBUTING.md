@@ -16,4 +16,5 @@ Thank you for contributing!
 
 Agents and AI assistants must follow the exact same process — no exceptions.
 
-See [CONSTITUTION.md](./CONSTITUTION.md) for detailed branching, commit, PR, CI/CD, and quality rules.
+See [CONSTITUTION.md](./CONSTITUTION.md) for detailed branching, commit, PR,
+CI/CD, and quality rules.

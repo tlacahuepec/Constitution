@@ -2,31 +2,38 @@ name: CI
 
 on:
   push:
-    branches: [ dev, main, release/** ]
+    branches: [dev, main]
   pull_request:
-    branches: [ dev, main, release/** ]
+    branches: [dev, main]
 
 jobs:
-  quality:
+  lint-markdown:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup language-specific tools
-        # Add steps here based on language (Python, Kotlin, Node, etc.)
-
-      - name: Run linting & formatting
-        run: echo "Run your linter here (Ruff, Spotless, ktlint, etc.)"
-
-      - name: Run tests
-        run: echo "Run your test suite here (pytest, ./gradlew test, etc.)"
-
-      - name: Build / Compile
-        run: echo "Build step here"
-
-      - name: Security scan
-        uses: aquasecurity/trivy-action@master
+      - name: Lint Markdown
+        uses: DavidAnson/markdownlint-cli2-action@v19
         with:
-          scan-type: fs
-          format: table
-          exit-code: 1
+          globs: "**/*.md"
+
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --offline "**/*.md"
+          fail: true
+
+  validate-yaml:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate YAML
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: .github/workflows/

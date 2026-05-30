@@ -1,0 +1,23 @@
+# markdownlint configuration for governance/documentation repo
+
+# Disable line length — governance docs prioritize readability over wrapping
+MD013: false
+
+# Allow inline HTML (checkmarks in Constitution)
+MD033: false
+
+# Allow multiple headings with same content
+MD024:
+  siblings_only: true
+
+# Allow trailing punctuation in headings
+MD026: false
+
+# Allow bare URLs in template files (agents need raw URLs)
+MD034: false
+
+# PR template starts with h2, not h1
+MD041: false
+
+# Table style — allow compact tables
+MD060: false
