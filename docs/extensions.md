@@ -135,7 +135,23 @@ ComfyUI workflow validation should include:
 
 ---
 
-## General (Any Language or Repository Type)
+## General (Coding Projects / Any Language)
+
+This section applies to repositories that contain executable production code, regardless of language.
+
+Every coding repository, regardless of technology, **must** have:
+
+1. A linter configured and enforced in CI
+2. A formatter configured and enforced in CI
+3. A test runner configured and enforced in CI
+4. Dependency/security scanning enabled (Dependabot or equivalent)
+5. A `.env.example` file if environment variables are used (never commit actual `.env`)
+
+If your language is not listed above, follow the General rules and add the language-appropriate tools to CI. Document your choices in the repository's `README.md`.
+
+---
+
+## General (Any Repository Type)
 
 Every repository, regardless of technology or artifact type, **must** have:
 
@@ -145,4 +161,4 @@ Every repository, regardless of technology or artifact type, **must** have:
 4. Dependency/security scanning enabled where applicable.
 5. A `.env.example` file if environment variables are used (never commit actual `.env`).
 
-If your language or repository type is not listed above, follow the General rules and add the appropriate lint/test/validation tools to CI. Document your choices in the repository's `README.md`.
+If your repository type is not listed above, follow the closest matching extension and add the appropriate lint/test/validation tools to CI. Document your choices in the repository's `README.md`.
