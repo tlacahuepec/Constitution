@@ -1,8 +1,128 @@
 # Engineering Constitution
 
-**Version 2.0** — September 2026  
+**Version 2.1** — September 2026  
 **Author**: tlacahuepec  
 **Applies to**: All repositories under tlacahuepec (software, documentation, workflow, template, artifact, or configuration repositories)
+
+## 0. Adoption Guide: Classify Your Project
+
+> Not every project is a production service. Before applying the Constitution,
+> classify your repository to determine which standards are **required** versus
+> **recommended** for your context. The Immutable Rules (Section 1) always
+> apply. Everything else scales with your project's tier.
+
+### Step 1 — Answer These Questions
+
+1. **Will this code be thrown away in days/weeks?** → If yes, you are **Tier 1**.
+2. **Does only one person use this, running locally?** → If yes, you are **Tier 2**.
+3. **Do multiple contributors or teams depend on this?** → If yes, you are **Tier 3**.
+4. **Is this deployed to real users, public, or business-critical?** → If yes, you are **Tier 4**.
+
+Always pick the **highest tier that applies**. A personal tool that becomes
+user-facing graduates to Tier 4 and must adopt the additional standards.
+
+### Step 2 — Identify Your Tier
+
+| Tier | Label | Description | Examples |
+|------|-------|-------------|----------|
+| 🧪 **1** | **Prototype / Experiment** | Throwaway spikes, research, learning repos, hackathon projects. Short-lived. | `fm24`, one-off data exploration notebooks |
+| 🔧 **2** | **Personal Tool** | Single-user, locally-run utilities kept long-term. No external consumers. | `local-comfy-workflows`, `TamperMonkey_VSCO_Scrapper` |
+| 🏢 **3** | **Internal / Team** | Multi-contributor repos, internal services, shared libraries, data pipelines. | `GameVault`, `stats-pipeline-consumer`, `Prompts` |
+| 🚀 **4** | **Production / Public** | User-facing apps, deployed APIs, open-source projects, business-critical services. | `Colmillo-Picks`, `Juzgon.com`, `cv-manager` |
+
+### Step 3 — Compliance Matrix
+
+The table below shows whether each scalable standard is **Required (✅)**,
+**Recommended (💡)**, or **Optional (—)** at each tier. Standards not listed
+here are **always required at every tier** (see the callout below the table).
+
+| Standard | 🧪 Tier 1 | 🔧 Tier 2 | 🏢 Tier 3 | 🚀 Tier 4 | Constitution Section |
+|----------|:---------:|:---------:|:---------:|:---------:|---------------------|
+| **Full GitFlow** (add `dev` + feat/fix/release/hotfix) | — | 💡 | ✅ | ✅ | §2 |
+| **SemVer formal versioning** | — | 💡 | ✅ | ✅ | §2 |
+| **At least 1 PR approval** | — | — | ✅ | ✅ | §3 |
+| **Environment tiers** (dev/staging/prod pipeline) | — | — | 💡 | ✅ | §4 |
+| **Blue/Green or Canary deployments** | — | — | 💡 | ✅ | §4 |
+| **Automated rollback triggers** | — | — | 💡 | ✅ | §4 |
+| **Docstrings on public APIs** | — | 💡 | ✅ | ✅ | §5 |
+| **Input validation with schema validators** | — | 💡 | ✅ | ✅ | §6 |
+| **Observability** (`/healthz`, `/readyz` endpoints) | — | — | 💡 | ✅ | §7 |
+| **OpenAPI 3.x documentation** | — | — | 💡 | ✅ | §7 |
+| **Incident management & post-mortems** | — | — | 💡 | ✅ | §7 |
+| **Accessibility** (WCAG 2.1 AA) | — | — | — | ✅ | §8 |
+
+> [!IMPORTANT]
+> **These standards are always required at every tier — no exceptions:**
+> TDD, VFD/VDD, SDD, branch protection on `main`, no secrets, no force-pushes
+> on any branch, no history rewrites (`--amend`/`rebase`) after push,
+> one change per PR, CI must pass, PR required, squash merge, CI linting +
+> tests + build + security scanning, Twelve-Factor configuration, SOLID
+> principles, Test Pyramid ratios, AAA test structure, mocking policy, code
+> readability hard limits, semantic naming, no warning suppressions, technical
+> debt 10% capacity, folder organization standards (package by feature,
+> Clean Architecture layering, stack-aware test placement, folder depth ≤ 4,
+> no utils junk drawers, consistent casing), refactoring standards (pure
+> refactoring PRs, harmonized Boy Scout local hygiene, characterization tests,
+> Rule of Three, Strangler Fig pattern, Expand-Contract, dead code elimination,
+> feature flags), zero-tolerance secrets + scanning, forbidden files policy,
+> OWASP Top 10, structured JSON logging, domain-specific exceptions, no silent
+> catch blocks, RFC 7807 error envelopes, ADRs, README/CHANGELOG/docs, code
+> review rubric & SLA, and agent instruction files.
+
+### Step 4 — Document Your Tier
+
+Every repository must declare its tier in the project `README.md`:
+
+```markdown
+## Constitution Compliance
+
+**Project Tier**: 🔧 Tier 2 — Personal Tool
+**Constitution Version**: 2.1
+```
+
+When a project's scope changes (e.g., a personal tool becomes a deployed
+service), update the tier and adopt the newly required standards before the
+next release.
+
+### Step 5 — Onboarding Plan
+
+When adopting the Constitution into an existing or new repository:
+
+1. **Audit the current state**: Review the repository against the compliance matrix for your tier.
+2. **Create an Adoption Backlog**: For each missing standard, create a trackable story or task.
+3. **Create a removal story**: If the repository has standards from a higher tier that do not apply (e.g., `/healthz` endpoints in a CLI tool), create a story to explicitly document why they are excluded, rather than silently ignoring them.
+4. **Prioritize**: Address Immutable Rules first, then Required (✅) standards for your tier, then Recommended (💡) standards.
+
+### Step 6 — Track Compliance Progress
+
+Every repository must maintain visibility into its Constitution compliance:
+
+**For Tier 1 and Tier 2 projects** (prototypes, personal tools):
+
+- Create a `COMPLIANCE.md` file in the repository root.
+- Track which standards are adopted, in progress, or not applicable.
+- Update it as standards are implemented.
+
+```markdown
+# Constitution Compliance Tracker
+
+**Project Tier**: 🔧 Tier 2 — Personal Tool
+**Constitution Version**: 2.1
+
+| Standard | Status | Notes |
+|----------|--------|-------|
+| TDD | ✅ Done | pytest suite in place |
+| Branch protection on main | ✅ Done | PR-only merges enforced |
+| Full GitFlow (dev branch) | N/A | Tier 2 — using main only |
+| Docstrings on public APIs | 🔄 In Progress | 60% coverage |
+```
+
+**For Tier 3 and Tier 4 projects** (team/internal, production/public):
+
+- Use **GitHub Issues** with a `constitution` label to track each missing standard.
+- Create a **GitHub Milestone** (e.g., "Constitution v2.1 Compliance") to group and monitor progress.
+- Each issue should reference the specific Constitution section and acceptance criteria.
+- Close issues as standards are adopted; the milestone progress bar serves as the compliance dashboard.
 
 ## 1. Preamble & Core Principles
 
@@ -57,9 +177,10 @@ Examples of VDD validation include JSON/YAML validation, Markdown linting, link 
 2. Never push directly to `main` or `dev`.
 3. Protected branches are sacred — all changes go through PRs + CI.
 4. No secrets ever in the repository.
-5. No force-pushes on protected branches.
-6. One logical change per PR (one issue per branch).
-7. CI must pass before any merge.
+5. No force-pushes on **any** branch — protected or feature. History is immutable once pushed.
+6. No `git commit --amend`, `git rebase`, or any other history rewrite after pushing to a remote. If a fix is needed, create a new commit.
+7. One logical change per PR (one issue per branch).
+8. CI must pass before any merge.
 
 ## 2. Version Control & Branching Strategy (GitFlow + Git Town)
 
@@ -232,6 +353,63 @@ Code is read far more often than it is written. Clean, readable code is non-nego
   - Unreferenced `TODO` or `FIXME` comments are prohibited and must be blocked during code review.
   - Teams should allocate ≥ 10% of engineering capacity to technical debt reduction and refactoring.
 
+### Codebase & Directory Structure Standards
+
+A clear, predictable folder structure communicates domain intent and eliminates structural debt:
+
+1. **Package by Feature (Screaming Architecture)**:
+   - Organize code around business domains or capabilities (`auth/`, `catalog/`, `billing/`) rather than technical archetypes (`controllers/`, `models/`, `views/`).
+   - High-level directory names must communicate the business purpose of the project at a glance.
+2. **Clean Architecture & Inward-Only Dependency Direction**:
+   - Within any module or service, code must honor strict dependency direction: Domain (pure business entities, zero external imports) $\to$ Application (use cases, orchestration, port interfaces) $\to$ Infrastructure (adapters, databases, external HTTP clients) $\to$ Presentation (routers, CLI handlers, controllers, UI).
+   - Outer layers depend on inner abstractions; inner layers must never import outer details.
+3. **Flat over Nested (Folder Depth ≤ 4 Levels)**:
+   - Folder depth must not exceed 4 directory levels measured from the project source root (`src/` or package root).
+   - When combining Package by Feature with Clean Architecture, keep feature folders flat (e.g., `src/catalog/models.py`, `src/catalog/service.py`, `src/catalog/repository.py`) rather than introducing deep sub-directory hierarchies for individual layers.
+4. **Stack-Aware Test Placement**:
+   - **TypeScript / Web**: Colocate test files directly adjacent to implementation files (`user.test.ts` next to `user.ts`) or in local `__tests__/` subdirectories.
+   - **Python / JVM (Java & Kotlin)**: Maintain a strict mirror test tree (`src/services/catalog.py` $\leftrightarrow$ `tests/services/test_catalog.py`, `src/main/kotlin/...` $\leftrightarrow$ `src/test/kotlin/...`). Test files must never be placed inside production packaging roots to prevent bundling test code into release artifacts.
+5. **Shared Module Boundaries (No "Utils" Junk Drawers)**:
+   - Catch-all modules such as `utils.py`, `common/`, or `helpers.ts` are strictly prohibited.
+   - Reusable logic must be extracted into single-purpose, semantically-named modules (e.g., `datetime_helpers.py`, `crypto.py`, `retry_policy.py`).
+   - Logic may only be promoted to a shared module if it is actively consumed by 2 or more distinct features.
+6. **Consistent Directory & File Casing**:
+   - **Python**: `snake_case/` for all directories and file names (`catalog_storage.py`).
+   - **TypeScript / Web**: `kebab-case/` for general files and directories (`catalog-storage.ts`), `PascalCase` for React/UI components (`CatalogCard.tsx`).
+   - **Kotlin / Java**: `PascalCase` matching class names (`CatalogStorage.kt`), standard lower-case package namespaces.
+
+### Refactoring & Code Evolution Standards
+
+Refactoring is a disciplined engineering practice, not casual tinkering:
+
+1. **Pure Refactoring PRs**:
+   - A pull request must either modify structure (refactoring) OR alter behavior (feature/bugfix), never both.
+   - Refactoring PRs must result in zero external behavior changes, proven by existing tests passing before and after without modification.
+2. **Boy Scout Rule Harmonization (Local Hygiene vs. Structural Refactoring)**:
+   - **Local Hygiene**: Small, low-risk cleanups (renaming poorly named local variables, correcting typos, fixing misleading comments) are encouraged within feature PRs *only on lines or functions directly modified by the feature*.
+   - **Structural Refactoring**: Any refactoring spanning multiple functions, classes, files, or public signatures must be executed in an isolated, dedicated pre-refactor PR.
+3. **Characterization Tests Before Refactoring**:
+   - Never refactor legacy, undocumented, or uncovered code without first writing regression or characterization tests.
+   - Verify that characterization tests pass green against the existing implementation before altering production code structure.
+4. **Rule of Three (Defer Shared Abstractions)**:
+   - Duplicate code once or twice before creating shared abstractions. Only extract shared cross-module base classes, generic interfaces, or utilities when a pattern is repeated across 3 or more distinct call sites.
+   - *Local Readability Precedence*: Within a single file or function, extract local private helper functions whenever required to obey the ≤ 30 lines per function limit, regardless of repetition count.
+5. **Strangler Fig Pattern for Legacy Subsystems**:
+   - Complex subsystem replacements or major architectural migrations must never be attempted as "big bang" rewrites.
+   - Introduce an intercepting facade or adapter interface, incrementally route calls to the new implementation module by module, and decommission legacy code only after all callers have migrated.
+6. **Expand-Contract Pattern for Breaking Code Interfaces**:
+   - When modifying public methods, classes, or interfaces, follow the Expand-Contract pattern across PRs:
+     1. *Expand*: Introduce the new interface alongside the old one.
+     2. *Migrate*: Transition consumers to the new interface across subsequent commits or PRs.
+     3. *Contract*: Mark the old interface `@deprecated("Use newMethod() instead. Removal in #issue")`.
+     4. *Purge*: Remove the deprecated interface in the next planned breaking release milestone.
+7. **Dead Code & Commented-Out Code Elimination**:
+   - Commented-out code, unreachable branches, unreferenced private methods, and unused imports must be deleted immediately.
+   - Git history is the permanent audit log and backup.
+   - *Exemption*: Methods undergoing active Expand-Contract migration are exempt from dead-code deletion only while marked `@deprecated` with an open tracking issue, for a maximum of one release cycle.
+8. **Feature Flags for Architectural Transitions**:
+   - Deep structural refactorings spanning multiple commits or PRs must be gated behind runtime feature flags or configuration switches so that protected branches (`main` and `dev`) remain continuously deployable and green at every intermediate step.
+
 ## 6. Security, Input Validation & Secrets
 
 - **Zero-Tolerance for Secrets**: Never commit secrets, credentials, tokens, or private keys. Use `.env.example` + GitHub Secrets.
@@ -327,7 +505,8 @@ AI agents (Claude Code, Codex, Copilot, Cursor, Grok, or any other) are held to 
 
 **Prohibited actions**:
 
-- Force-pushing on any protected branch
+- Force-pushing on **any** branch (protected or feature)
+- Using `git commit --amend`, `git rebase`, or any history rewrite after pushing to a remote
 - Bypassing CI or skipping hooks (`--no-verify`)
 - Committing secrets, credentials, or `.env` files
 - Committing large binaries, generated image batches, model checkpoints, private images, or machine-specific artifacts unless the repository explicitly allows them
