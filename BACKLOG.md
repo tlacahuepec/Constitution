@@ -12,21 +12,26 @@ Track progress one story at a time. Mark status as: `TODO`, `IN PROGRESS`, `DONE
 | 2 | Fix `.github/PULL_REQUEST_TEMPLATE.md` — support VDD path | DONE | Dual-path TDD/VDD, SOLID, no suppressions |
 | 3 | Align `templates/AGENTS.md` — add SOLID mention | DONE | Added Always section with SOLID & tests/validation |
 | 4 | Add Gitleaks to `ci.yml` | DONE | Added scan-secrets job with gitleaks-action |
-| 5 | Expand `adopt.sh` — optionally install PR template + markdownlint | TODO | Currently only copies 4 agent files |
+| 5 | Expand `adopt.sh` — modular installation (--agents, --templates, --all) | DONE | Added flags and templates installation |
 
 ---
 
-## Phase 2: Critical Gaps (v1.4)
+## Phase 2: SOLID, Readability & Templates Suite (v1.4)
 
 | # | Story | Status | Notes |
 |---|-------|--------|-------|
-| 6 | Add SOLID Principles & Code Design section to `CONSTITUTION.md` | TODO | Define all 5 principles with do/don't |
-| 7 | Add Code Readability & Complexity Limits section | TODO | Naming, function length, file length, cyclomatic complexity |
-| 8 | Add Technical Debt Management policy | TODO | TODO/FIXME conventions, debt tracking |
-| 9 | Add ADR framework — template + `docs/adr/` convention | TODO | Architecture Decision Records |
-| 10 | Add Input Validation & Sanitization standard | TODO | Schema validation at boundaries |
-| 11 | Add Structured Logging standard | TODO | JSON format, log levels, PII redaction |
-| 12 | Add OWASP Top 10 Security Annex | TODO | `docs/security.md` with mitigations |
+| 6 | Add SOLID Principles & Code Design section to `CONSTITUTION.md` | DONE | Operational rules for SRP, OCP, LSP, ISP, DIP |
+| 7 | Add Code Readability & Complexity Limits section | DONE | Lengths (≤30/≤300), complexity ≤10, nesting ≤3 |
+| 8 | Add SDD Feature Spec Template (`templates/SPEC_TEMPLATE.md`) | DONE | Full design doc with acceptance criteria |
+| 9 | Add ADR framework (`templates/ADR_TEMPLATE.md` + Section 7) | DONE | ADR template and CONSTITUTION mandate |
+| 10 | Add Audit Report Template (`templates/AUDIT_REPORT_TEMPLATE.md`) | DONE | Paired with `docs/audit-guide.md` |
+| 11 | Add Code Review Checklist (`templates/CODE_REVIEW_CHECKLIST.md`) | DONE | Reviewer rubric for SOLID, readability, tests |
+| 12 | Add Security Policy Template (`templates/SECURITY.md`) | DONE | Vulnerability reporting and SLAs |
+| 13 | Add Child PR Template (`templates/PULL_REQUEST_TEMPLATE.md`) | DONE | Ready-to-copy dual-path PR template |
+| 14 | Add Technical Debt Management policy | TODO | TODO/FIXME conventions, debt tracking |
+| 15 | Add Input Validation & Sanitization standard | TODO | Schema validation at boundaries |
+| 16 | Add Structured Logging standard | TODO | JSON format, log levels, PII redaction |
+| 17 | Add OWASP Top 10 Security Annex | TODO | `docs/security.md` with mitigations |
 
 ---
 
@@ -64,3 +69,12 @@ Track progress one story at a time. Mark status as: `TODO`, `IN PROGRESS`, `DONE
 - **Story 2**: Fix `.github/PULL_REQUEST_TEMPLATE.md` — added dual-path TDD/VDD verification, SOLID check, zero suppressions check, forbidden files check.
 - **Story 3**: Align `templates/AGENTS.md` — added Always section with SOLID principles and test/validation mandates.
 - **Story 4**: Add Gitleaks secret scanning job to `.github/workflows/ci.yml`.
+- **Story 5**: Expand `scripts/adopt.sh` — added modular `--agents`, `--templates`, and `--all` options.
+- **Story 6**: Add SOLID Principles & Code Design standards to `CONSTITUTION.md`.
+- **Story 7**: Add Code Readability & Complexity Limits (≤30 lines/function, ≤300 lines/file, complexity ≤10, nesting ≤3) to `CONSTITUTION.md`.
+- **Story 8**: Add SDD Feature Specification Template (`templates/SPEC_TEMPLATE.md`).
+- **Story 9**: Add ADR Template (`templates/ADR_TEMPLATE.md`) and mandate in `CONSTITUTION.md` Section 7.
+- **Story 10**: Add Standalone Audit Report Template (`templates/AUDIT_REPORT_TEMPLATE.md`).
+- **Story 11**: Add Code Review Checklist (`templates/CODE_REVIEW_CHECKLIST.md`).
+- **Story 12**: Add Security Policy Template (`templates/SECURITY.md`).
+- **Story 13**: Add Child PR Template (`templates/PULL_REQUEST_TEMPLATE.md`).

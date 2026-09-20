@@ -127,7 +127,9 @@ Artifact, workflow, documentation, template, and configuration repositories must
 - Large-file or forbidden-file checks when the repository must not store binaries, models, generated outputs, or credentials
 - Repository-specific validation scripts where useful
 
-## 5. Testing & Quality Standards
+## 5. Testing, Quality & Code Design Standards
+
+### Testing & Verification Standards
 
 - TDD is mandatory for executable production code.
 - VDD is mandatory for non-executable artifacts, workflows, prompts, templates, configuration, and documentation.
@@ -135,9 +137,48 @@ Artifact, workflow, documentation, template, and configuration repositories must
 - Language-appropriate tools are required for code (pytest, JUnit, etc.).
 - Artifact-appropriate tools are required for non-code repositories (JSON/YAML validation, Markdown linting, link checks, schema checks, or import/dry-run validation).
 - Formatting & linting **enforced** in CI where practical.
-- Never suppress lint warnings, PMD rules, or static analysis findings (no
-  `@SuppressWarnings`, `// noinspection`, `# noqa`, `<!-- markdownlint-disable`,
-  etc.). Fix the issue or justify with a team-approved exception in the PR.
+
+### SOLID Principles (Mandatory for OOP and Modular Systems)
+
+Every executable codebase must adhere to the SOLID principles:
+
+1. **Single Responsibility Principle (SRP)**:
+   - A class, module, or function must have one, and only one, reason to change.
+   - Separate business logic, persistence, and presentation into distinct layers.
+   - Classes exceeding 300 lines or functions with multiple responsibilities are considered SRP violations.
+2. **Open/Closed Principle (OCP)**:
+   - Software entities should be open for extension, but closed for modification.
+   - Use interfaces, polymorphism, and dependency injection to allow new behaviors without modifying existing, tested code.
+3. **Liskov Substitution Principle (LSP)**:
+   - Subtypes must be substitutable for their base types without altering program correctness.
+   - Subclasses must honor the base contract and never throw unexpected exceptions (e.g., `UnsupportedOperationException`) on base methods.
+4. **Interface Segregation Principle (ISP)**:
+   - Clients should not be forced to depend on interfaces they do not use.
+   - Prefer small, highly-cohesive interfaces over fat, monolithic ones.
+5. **Dependency Inversion Principle (DIP)**:
+   - High-level modules must not depend on low-level modules; both must depend on abstractions.
+   - Abstractions must not depend on details; details must depend on abstractions.
+   - Use dependency injection to supply dependencies.
+
+### Code Readability & Writing Standards
+
+Code is read far more often than it is written. Clean, readable code is non-negotiable:
+
+- **Function / Method Length**: Target ≤ 30 lines. Absolute ceiling of 50 lines without documented justification.
+- **File Length**: Target ≤ 300 lines. Absolute ceiling of 500 lines. Break large files into cohesive modules.
+- **Cyclomatic Complexity**: Maximum of 10 per function/method. Functions exceeding complexity 10 must be refactored into smaller, focused helpers.
+- **Nesting Depth**: Maximum of 3 levels of indentation (`if`, loops, matches). Flatten code using guard clauses and early returns.
+- **Semantic Naming Conventions**:
+  - Variable, function, and class names must be descriptive, pronounceable, and domain-accurate.
+  - Avoid cryptic abbreviations (use `userRepository`, not `uRepo` or `ur`).
+  - No single-letter variables except short loop indices (`i`, `j`).
+  - Booleans must read as assertions or predicates: `isEnabled`, `hasAccess`, `isComplete`.
+- **Comments & Self-Documenting Code**:
+  - Code should explain *what* it does through clear naming and structure.
+  - Inline comments must explain *why* something is done (business context, non-obvious constraints), never *what* the code does.
+  - Public APIs, interfaces, and exported functions require docstrings (Javadoc, Python docstrings, JSDoc).
+- **Prohibition on Warning Suppressions**:
+  - Never suppress lint warnings, PMD rules, or static analysis findings (no `@SuppressWarnings`, `// noinspection`, `# noqa`, `<!-- markdownlint-disable`, etc.). Fix the root cause.
 
 ## 6. Security & Secrets
 
@@ -146,13 +187,14 @@ Artifact, workflow, documentation, template, and configuration repositories must
 - No secrets in code, documentation, workflow files, prompts, examples, screenshots, or history.
 - Do not commit large model files, generated output batches, private images, credentials, tokens, cookies, browser exports, or local machine paths unless explicitly safe and intentional.
 
-## 7. Documentation
+## 7. Documentation & Architecture Decisions
 
 - Clear `README.md`
 - This `CONSTITUTION.md`
 - `docs/` folder when needed
 - `CHANGELOG.md` or automated releases
 - For artifact/workflow repositories, every reusable artifact should include enough documentation to reproduce and validate it locally.
+- **Architecture Decision Records (ADRs)**: All significant architectural decisions (framework choices, persistence strategies, API contracts, cross-cutting patterns) must be recorded as an ADR in `docs/adr/` using `templates/ADR_TEMPLATE.md`.
 
 ## 8. Technology-Specific Extensions
 
