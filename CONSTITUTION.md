@@ -53,7 +53,8 @@ here are **always required at every tier** (see the callout below the table).
 
 > [!IMPORTANT]
 > **These 35 standards are always required at every tier — no exceptions:**
-> TDD, VFD/VDD, SDD, branch protection on `main`, no secrets, no force-pushes,
+> TDD, VFD/VDD, SDD, branch protection on `main`, no secrets, no force-pushes
+> on any branch, no history rewrites (`--amend`/`rebase`) after push,
 > one change per PR, CI must pass, PR required, squash merge, CI linting +
 > tests + build + security scanning, Twelve-Factor configuration, SOLID
 > principles, Test Pyramid ratios, AAA test structure, mocking policy, code
@@ -171,9 +172,10 @@ Examples of VDD validation include JSON/YAML validation, Markdown linting, link 
 2. Never push directly to `main` or `dev`.
 3. Protected branches are sacred — all changes go through PRs + CI.
 4. No secrets ever in the repository.
-5. No force-pushes on protected branches.
-6. One logical change per PR (one issue per branch).
-7. CI must pass before any merge.
+5. No force-pushes on **any** branch — protected or feature. History is immutable once pushed.
+6. No `git commit --amend`, `git rebase`, or any other history rewrite after pushing to a remote. If a fix is needed, create a new commit.
+7. One logical change per PR (one issue per branch).
+8. CI must pass before any merge.
 
 ## 2. Version Control & Branching Strategy (GitFlow + Git Town)
 
@@ -441,7 +443,8 @@ AI agents (Claude Code, Codex, Copilot, Cursor, Grok, or any other) are held to 
 
 **Prohibited actions**:
 
-- Force-pushing on any protected branch
+- Force-pushing on **any** branch (protected or feature)
+- Using `git commit --amend`, `git rebase`, or any history rewrite after pushing to a remote
 - Bypassing CI or skipping hooks (`--no-verify`)
 - Committing secrets, credentials, or `.env` files
 - Committing large binaries, generated image batches, model checkpoints, private images, or machine-specific artifacts unless the repository explicitly allows them
