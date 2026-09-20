@@ -33,6 +33,7 @@ Provide a concise 2–3 paragraph summary of the repository's health, constituti
 ---
 
 ## 3. Critical Findings (🔴 CRITICAL)
+
 *Must be resolved before next merge. Violations of Immutable Rules or direct security vulnerabilities.*
 
 1. **[Finding Title]**
@@ -43,6 +44,7 @@ Provide a concise 2–3 paragraph summary of the repository's health, constituti
 ---
 
 ## 4. High Priority Findings (🟠 HIGH)
+
 *Key architectural or quality standards missing.*
 
 1. **[Finding Title]**
@@ -53,6 +55,7 @@ Provide a concise 2–3 paragraph summary of the repository's health, constituti
 ---
 
 ## 5. Medium Priority Findings (🟡 MEDIUM)
+
 *Best practice gaps that weaken quality, testing, or maintainability.*
 
 1. **[Finding Title]**
@@ -63,6 +66,7 @@ Provide a concise 2–3 paragraph summary of the repository's health, constituti
 ---
 
 ## 6. Low Priority Findings (🔵 LOW)
+
 *Minor inconsistencies, formatting, or optional improvements.*
 
 1. **[Finding Title]**

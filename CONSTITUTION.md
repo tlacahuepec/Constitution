@@ -163,6 +163,7 @@ Artifact, workflow, documentation, template, and configuration repositories must
 - Formatting & linting **enforced** in CI where practical.
 
 #### The Test Pyramid & Testing Depth
+
 Executable software repositories must balance their test suites according to the Test Pyramid:
 
 1. **Unit Tests (70–80% of test suite)**:
@@ -175,10 +176,12 @@ Executable software repositories must balance their test suites according to the
    - Validate critical user journeys and consumer-driven API contracts.
 
 #### Test Structure & Naming
+
 - Every test must follow the **Arrange-Act-Assert (AAA)** or **Given-When-Then** pattern with clear visual separation between setup, execution, and assertion.
 - Test names must explicitly describe the scenario and expected outcome: `test_<methodUnderTest>_<condition>_<expectedResult>()` or `should_<expectedResult>_when_<condition>()`.
 
 #### Mocking & Test Double Policies
+
 - **Never mock internal domain entities or business logic**: Domain models must always be real instances. If tests require mocking domain logic, the architecture is tightly coupled and must be refactored.
 - **Only mock external I/O boundaries**: Mock third-party HTTP APIs, payment gateways, external notification services, and network clients.
 - **Favor in-memory fakes over deep mock hierarchies**: When simulating an interface, write a simple in-memory fake implementation rather than complex, brittle mocking configurations.
@@ -243,6 +246,7 @@ Code is read far more often than it is written. Clean, readable code is non-nego
 ## 7. Logging, Error Handling & Architecture Decisions
 
 ### Structured Logging Standards
+
 - Services must use structured JSON logging.
 - Log levels must be semantic:
   - `DEBUG`: Verbose diagnostic information (disabled in production).
@@ -253,17 +257,20 @@ Code is read far more often than it is written. Clean, readable code is non-nego
 - **Prohibition on Sensitive Data in Logs**: Never log passwords, API keys, bearer tokens, cookies, credit card numbers, or personally identifiable information (PII). Redact sensitive fields before writing logs.
 
 ### Error Handling Standards
+
 - Define domain-specific exception hierarchies. Avoid throwing generic `Exception` or `RuntimeException`.
 - Never silently catch exceptions (no empty catch blocks or bare `except:`). Always log or translate errors.
 - API errors must return consistent structured envelopes (RFC 7807 Problem Details recommended).
 - Fail fast on startup if configuration or required dependencies are missing.
 
 ### Monitoring, Metrics & Tracing
+
 - Services must expose `/healthz` (liveness) and `/readyz` (readiness) endpoints.
 - Collect and track the Four Golden Signals (Latency, Traffic, Errors, Saturation).
 - Follow the observability standards in [`docs/observability.md`](./docs/observability.md).
 
 ### Documentation, APIs & Architecture Decisions
+
 - Clear `README.md`
 - This `CONSTITUTION.md`
 - `docs/` folder when needed

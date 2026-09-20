@@ -34,6 +34,7 @@ Before requesting review:
 When leaving comments, reviewers must clearly distinguish between **blocking issues** and **non-blocking suggestions**:
 
 ### Blocking Comments (Must be addressed before merge)
+
 Use blocking comments for issues affecting correctness, security, or constitutional standards:
 
 - **Correctness & Bugs**: Off-by-one errors, race conditions, null-pointer risks, unhandled edge cases.
@@ -47,6 +48,7 @@ Use blocking comments for issues affecting correctness, security, or constitutio
 - **Breaking Changes**: Undocumented breaking API or schema changes without deprecation windows.
 
 ### Non-Blocking Comments (Can be merged without resolving)
+
 Prefix non-blocking comments with `nit:` or `suggestion:` so the author knows the PR is not blocked:
 
 - `nit: rename 'data' to 'userProfile' for additional clarity.`
@@ -60,12 +62,14 @@ Prefix non-blocking comments with `nit:` or `suggestion:` so the author knows th
 Reviewers should systematically evaluate the following five dimensions:
 
 ### A. Architecture & Design
+
 - Does the change honor SOLID principles?
 - Are abstractions well-placed?
 - Are layers properly separated (domain logic vs persistence vs transport)?
 - Is significant architectural impact documented via an ADR in `docs/adr/`?
 
 ### B. Readability & Code Quality
+
 - Are functions focused (≤ 30 lines) and files modular (≤ 300 lines)?
 - Is indentation depth ≤ 3?
 - Are variable and method names domain-descriptive and pronounceable?
@@ -73,17 +77,20 @@ Reviewers should systematically evaluate the following five dimensions:
 - Do public APIs have docstrings?
 
 ### C. Testing & Verification
+
 - Are tests structured using Arrange-Act-Assert (AAA)?
 - Do tests verify behavior and edge cases, not just happy-path coverage?
 - Does test coverage meet or exceed 80%?
 - Are domain objects real instances (no mocking of internal domain models)?
 
 ### D. Security & Boundaries
+
 - Is all untrusted input validated at the controller/gateway boundary?
 - Are database queries parameterized?
 - Are any credentials, keys, or PII exposed in code, logs, or error responses?
 
 ### E. Error Handling & Observability
+
 - Are domain-specific exceptions used instead of generic `Exception`?
 - Are exceptions handled cleanly without swallowed `catch` blocks?
 - Are logs structured as JSON with semantic levels and request correlation IDs?

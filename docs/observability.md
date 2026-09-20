@@ -9,6 +9,7 @@ This guide establishes mandatory observability, health checking, metrics, and tr
 Every HTTP service must expose two distinct health check endpoints to enable orchestrators (Kubernetes, Docker, Nomad) and load balancers to manage container lifecycles safely:
 
 ### A. Liveness Endpoint: `/healthz`
+
 - **Purpose**: Verifies that the application process is running and its event loop or thread pool is unblocked.
 - **Behavior**:
   - Returns `200 OK` with `{ "status": "alive" }`.
@@ -16,6 +17,7 @@ Every HTTP service must expose two distinct health check endpoints to enable orc
   - Must respond in < 10 milliseconds.
 
 ### B. Readiness Endpoint: `/readyz`
+
 - **Purpose**: Verifies that the application is fully initialized and capable of successfully servicing incoming user traffic.
 - **Behavior**:
   - Checks reachability of critical internal dependencies: database connection pool initialized, cache accessible, required configuration loaded.
@@ -30,22 +32,30 @@ Every HTTP service must expose two distinct health check endpoints to enable orc
 All production services must collect and export metrics covering the **Four Golden Signals** (Google SRE standard):
 
 ### 1. Latency
+
 The time it takes to service a request.
+
 - Measure both successful requests and failed requests separately.
 - Track percentiles: **p50** (median), **p95**, and **p99** (tail latency). Averages hide critical degradation.
 
 ### 2. Traffic
+
 A measure of how much demand is being placed on your system.
+
 - HTTP services: Requests per second (RPS) broken down by route and HTTP method.
 - Event-driven / Queue services: Messages processed per second, queue depth / consumer lag.
 
 ### 3. Errors
+
 The rate of requests that fail.
+
 - Differentiate between **Client Errors (4xx)** (validation failures, auth issues) and **Server Errors (5xx)** (unhandled exceptions, database timeouts).
 - Track error ratio: `(5xx requests) / (total requests)`. An error ratio > 1% should trigger engineering alerts.
 
 ### 4. Saturation
+
 A measure of system capacity utilization.
+
 - CPU and Memory utilization percentages.
 - Database connection pool utilization (active vs idle connections).
 - Thread pool queue depth and garbage collection pause times.

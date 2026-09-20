@@ -64,14 +64,17 @@ Chronological breakdown of events from inception to resolution:
 ## 5. Lessons Learned
 
 ### What Went Well
+
 - Monitoring alerts triggered within 2 minutes of error rate spikes.
 - Rollback procedure succeeded quickly without data corruption.
 
 ### What Went Wrong
+
 - Destructive migration bypassed staging load testing.
 - Health checks did not detect database lock contention immediately.
 
 ### Where We Got Lucky
+
 - The issue occurred on a Tuesday afternoon rather than during high-volume weekend traffic.
 
 ---

@@ -1,6 +1,6 @@
 # ADR-XXXX: [Short Title of Architectural Decision]
 
-**Status**: Proposed | Accepted | Deprecated | Superseded by [ADR-YYYY](YYYY-title.md)  
+**Status**: Proposed | Accepted | Deprecated | Superseded by ADR-YYYY  
 **Date**: YYYY-MM-DD  
 **Deciders**: [List of decision makers]  
 **Technical Story**: [Issue or PR link, e.g. #42]  
@@ -30,10 +30,12 @@ Describe the context and problem that requires an architectural decision. What c
 Chosen option: **[Option Name]**, because [justification explaining how it satisfies the decision drivers better than alternatives].
 
 ### Positive Consequences
+
 - [Positive effect 1]
 - [Positive effect 2]
 
 ### Negative Consequences / Trade-offs
+
 - [Trade-off or additional maintenance burden]
 - [Mitigation strategy for risks]
 
@@ -42,10 +44,12 @@ Chosen option: **[Option Name]**, because [justification explaining how it satis
 ## 5. Pros and Cons of the Options
 
 ### Option 1: [Title]
+
 - Good, because [argument]
 - Bad, because [argument]
 
 ### Option 2: [Title]
+
 - Good, because [argument]
 - Bad, because [argument]
 

@@ -14,9 +14,11 @@ Describe the problem being solved, the user pain point, or the capability being 
 ## 2. Scope
 
 ### In-Scope
+
 - List what is explicitly part of this change.
 
 ### Out-of-Scope
+
 - List what will NOT be addressed in this change to prevent scope creep.
 
 ---
@@ -24,16 +26,19 @@ Describe the problem being solved, the user pain point, or the capability being 
 ## 3. Requirements & Data Contracts
 
 ### Inputs & Parameters
+
 | Input / Parameter | Type | Required | Description | Example |
 |---|---|---|---|---|
 | `paramName` | `string` | Yes | Description of parameter | `"exampleValue"` |
 
 ### Expected Outputs & Return Values
+
 | Output / Field | Type | Description |
 |---|---|---|
 | `fieldName` | `integer` | Description of output field |
 
 ### Data Models / Schemas
+
 ```json
 {
   "example": "schema definition"
@@ -59,12 +64,14 @@ Describe the problem being solved, the user pain point, or the capability being 
 ## 5. Verification Strategy
 
 ### For Executable Software (TDD)
+
 - [ ] Unit tests covering core logic and boundary conditions.
 - [ ] Integration tests covering external dependencies / I/O.
 - [ ] Failing test written and verified before writing production code.
 - [ ] Minimum 80% coverage maintained.
 
 ### For Artifacts / Documentation (VDD)
+
 - [ ] Syntax and schema validation defined.
 - [ ] Dry-run or import validation procedure documented.
 

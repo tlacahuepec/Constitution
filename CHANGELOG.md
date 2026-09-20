@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 ## [2.0.0] - 2026-09-20
 
 ### Added
+
 - **SOLID Principles & Clean Code Design**: Operational rules for SRP (class size ≤ 300 lines), OCP, LSP, ISP, and DIP in Section 5.
 - **Code Readability & Complexity Limits**: Non-negotiable limits on function length (≤ 30 lines), file length (≤ 300 lines), cyclomatic complexity (≤ 10), and nesting depth (≤ 3) in Section 5.
 - **The Test Pyramid & Mocking Boundaries**: Codified Unit (70–80%), Integration (15–20%), and E2E (5–10%) layers with Arrange-Act-Assert structure. Absolute ban on mocking internal domain logic.
@@ -35,6 +36,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 - **Java / JVM Technology Extension**: Added Google Java Format, SpotBugs, JUnit 5 + JaCoCo (≥ 80% coverage) to `docs/extensions.md`.
 
 ### Changed
+
 - Upgraded PR template and `CONTRIBUTING.md` to dual-path Verification-First Development (TDD/VDD).
 - Added Gitleaks secret scanning to repo CI workflow.
 - Synchronized all AI agent templates (`CLAUDE.md`, `AGENTS.md`, Copilot, Cursor).
