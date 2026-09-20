@@ -2,7 +2,7 @@
 # Full document: https://github.com/tlacahuepec/Constitution/blob/main/CONSTITUTION.md
 
 # Immutable Rules
-- TDD is mandatory — write failing tests BEFORE production code
+- Verification-first is mandatory: use TDD for executable code and VDD for non-executable artifacts
 - Never push directly to main or dev
 - All changes go through PRs with CI passing
 - No secrets ever in the repository
@@ -10,18 +10,25 @@
 - One logical change per PR (one issue per branch)
 - CI must pass before any merge
 
-# TDD Protocol (mandatory)
+# Verification Protocol for Executable Code
 - Write a failing test that defines the expected behavior
 - Run the test and confirm it fails
 - Write the minimum code to make the test pass
 - Run the test and confirm it passes
 - Refactor if needed, ensuring tests still pass
 
+# Verification Protocol for Artifacts / Workflows / Docs
+- Write or update the spec, checklist, schema, README, or acceptance criteria first
+- Define validation before changing the artifact
+- Automate validation where practical
+- Document manual validation in the PR when automation is not practical
+- Preserve reproducibility and safety
+
 # Workflow
 - Branch from dev using feat/, fix/, hotfix/, or release/ prefix
 - Commit messages: imperative mood, reference issue, < 72 chars
-- Before pushing: run linter, formatter, and full test suite
-- PR must include: issue link, summary, test plan, checklist
+- Before pushing: run linter, formatter, tests, and/or validation scripts
+- PR must include: issue link, summary, test or validation plan, checklist
 
 # Prohibited
 - Never commit directly to main or dev
@@ -29,12 +36,14 @@
 - Never suppress lint, PMD, or static analysis warnings — fix the issue
 - Never self-approve PRs
 - Never commit secrets or .env files
+- Never commit large model files, generated output batches, private images, or machine-specific artifacts unless explicitly allowed
 - Never make destructive changes without human authorization
-- Never skip writing tests
+- Never skip tests or validation because the repository has no traditional production code
 
 # Always
 - Read CONSTITUTION.md before starting significant work
-- Add tests for all new code
-- Use SOLID principles
+- Add tests for executable code
+- Add validation for non-executable artifacts
+- Use SOLID principles where software design is involved
 - Prefer small focused changes
 - Follow existing patterns in the repository

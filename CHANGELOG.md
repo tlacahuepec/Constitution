@@ -4,6 +4,22 @@ All notable changes to the Engineering Constitution will be documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.3] - 2026-06-06
+
+### Added
+
+- Verification-First Development (VFD) for all repository types.
+- Validation-Driven Development (VDD) for artifact, workflow, template, prompt, configuration, and documentation repositories.
+- Artifact / Workflow / Documentation repository guidance in `docs/extensions.md`.
+- ComfyUI workflow repository standards for reusable local workflow libraries.
+
+### Changed
+
+- TDD remains required for executable production code.
+- Non-executable repositories may use validation checks instead of irrelevant unit tests.
+- Pull requests may include either a test plan or a validation plan.
+- Agent templates now instruct agents to apply the correct verification method for the repository type.
+
 ## [1.2] - 2026-05-29
 
 ### Added
