@@ -13,6 +13,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 - **Step 5 — Onboarding Plan**: Mandatory audit-and-backlog workflow when adopting the Constitution, including a removal story for explicitly documenting excluded higher-tier standards.
 - **Step 6 — Track Compliance Progress**: Tier 1/2 projects track compliance via a local `COMPLIANCE.md` file; Tier 3/4 projects use GitHub Issues with a `constitution` label and a milestone as their compliance dashboard.
 - **Tier Declaration Requirement**: Repositories must declare their Constitution tier in `README.md`.
+- **Immutable Rule 5 — No force-pushes on any branch**: Strengthened from protected-only to all branches. History is immutable once pushed.
+- **Immutable Rule 6 — No history rewrites after push**: Explicitly bans `git commit --amend`, `git rebase`, and any other history rewrite after pushing to a remote.
+- **Self-Compliance**: Constitution repository declares itself as 🔧 Tier 2 — Personal Tool in `README.md`.
 
 ## [2.0.0] - 2026-09-20
 

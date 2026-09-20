@@ -1,6 +1,15 @@
 # Engineering Constitution
 
-This repository contains the official **Engineering Constitution (Version 2.0)** that governs **all** software and artifact development across every tlacahuepec repository.
+This repository contains the official **Engineering Constitution (Version 2.1)** that governs **all** software and artifact development across every tlacahuepec repository.
+
+## Constitution Compliance
+
+**Project Tier**: 🔧 Tier 2 — Personal Tool  
+**Constitution Version**: 2.1
+
+> This repository is a non-executable artifact/documentation repo. It follows
+> VDD (Validation-Driven Development) with markdownlint, link checks, and
+> bash syntax validation as its verification methods.
 
 It defines the non-negotiable standards for:
 
@@ -17,7 +26,7 @@ It defines the non-negotiable standards for:
 
 ## Quick Links
 
-- [Full Constitution (v2.0)](./CONSTITUTION.md)
+- [Full Constitution (v2.1)](./CONSTITUTION.md)
 - [Technology Extensions](./docs/extensions.md)
 - [Audit Guide](./docs/audit-guide.md)
 - [Security Standards (OWASP Top 10)](./docs/security.md)
