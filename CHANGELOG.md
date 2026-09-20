@@ -4,6 +4,14 @@ All notable changes to the Engineering Constitution will be documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.3.0] - 2026-09-20
+
+### Added
+
+- **Branch Freshness & Lineage Protocol**: Formalized mandatory pre-branch synchronization in Section 2. Requires running `git fetch origin` and pulling the latest active integration base (`origin/dev` for GitFlow, `origin/main` for trunk-based) before creating any feature branch.
+- **Continuous Upstream Synchronization**: Mandated regular merging of the base branch into feature branches during development to resolve conflicts early.
+- **Agent Instruction Updates**: Added explicit step-by-step pre-branch synchronization commands across all agent templates (`AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md`, and `cursorrules`).
+
 ## [2.2.0] - 2026-09-20
 
 ### Added

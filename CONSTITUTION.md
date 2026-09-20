@@ -211,6 +211,23 @@ All repositories releasing versioned packages, APIs, or software artifacts must 
 - **PATCH (`0.0.X`)**: Backward-compatible bugfixes, security patches, or internal performance improvements.
 - **Deprecation Policy**: Features, endpoints, or APIs scheduled for removal must be marked `@deprecated` (with clear migration guidance in docs) for at least one MINOR release cycle prior to removal in the next MAJOR release.
 
+### Branch Freshness & Lineage Protocol
+
+1. **Pre-Branch Synchronization (Mandatory)**:
+   - Never branch from a stale local reference.
+   - Before creating any feature, bugfix, or release branch, always fetch remote state: `git fetch origin`.
+   - Identify the active integration base:
+     - **Repositories with `dev` (GitFlow / Multi-branch)**: Branch from the latest `origin/dev`.
+     - **Trunk-based repositories (Tier 1 & 2)**: Branch from the latest `origin/main`.
+     - **Production Hotfixes (`hotfix/*`)**: Branch directly from the latest `origin/main`.
+   - Update your local base to match the remote exactly before branching (`git checkout <base> && git pull origin <base>`).
+2. **Continuous Upstream Synchronization**:
+   - While work is underway on a feature branch, regularly synchronize with the integration base (`git merge <base>` or `git town sync`) to continuously resolve conflicts early.
+   - Never let a feature branch diverge for days without pulling upstream changes.
+3. **Pre-PR Freshness Verification**:
+   - Before opening a pull request or requesting code review, ensure the branch is fully merged with the latest remote base branch (`origin/dev` or `origin/main`).
+   - PRs with merge conflicts or stale base commits must be updated before merging.
+
 ## 3. Pull Request & Merging Rules
 
 Every change requires a Pull Request.
@@ -485,16 +502,20 @@ AI agents (Claude Code, Codex, Copilot, Cursor, Grok, or any other) are held to 
 1. Read `CONSTITUTION.md` (or the agent instruction file: `CLAUDE.md`,
    `AGENTS.md`, `.github/copilot-instructions.md`, `.cursorrules`).
 2. Identify the issue or spec being addressed.
-3. Identify whether the repository is executable software or a non-executable artifact/workflow/documentation repository.
+3. Check project tier in `README.md` to identify which standards are required.
+4. Identify whether the repository is executable software or a non-executable artifact/workflow/documentation repository.
+5. Identify the active perennial integration base: `dev` for multi-branch repositories, or `main` for trunk-based repositories.
 
 **During development**:
 
-1. Branch from `dev` using the correct prefix (`feat/`, `fix/`, `hotfix/`,
+1. **Synchronize first**: Always run `git fetch origin` and pull the latest base (`dev` or `main`) before creating any branch. Never branch from a stale local reference.
+2. Branch from the fresh base using the correct prefix (`feat/`, `fix/`, `hotfix/`,
    `release/`).
-2. Follow VFD — use TDD for executable code, or VDD for artifacts/workflows/docs.
-3. Never commit directly to `main` or `dev`.
-4. Run linter, formatter, test suite, and/or validation scripts before pushing.
-5. Reference the issue number in commit messages.
+3. Follow VFD — use TDD for executable code, or VDD for artifacts/workflows/docs.
+4. Keep branches updated with the integration base regularly (`git merge <base>`).
+5. Never commit directly to `main` or `dev`.
+6. Run linter, formatter, test suite, and/or validation scripts before pushing.
+7. Reference the issue number in commit messages.
 
 **When submitting**:
 
