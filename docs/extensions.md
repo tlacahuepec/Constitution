@@ -158,6 +158,58 @@ ComfyUI workflow validation should include:
 
 ---
 
+## API Design Standards (RESTful Services)
+
+All HTTP APIs must adhere to standard RESTful design conventions:
+
+1. **Resource-Oriented URIs**:
+   - Use plural nouns for resource collections: `/api/v1/orders`, `/api/v1/users`.
+   - Represent hierarchical relationships naturally: `/api/v1/users/{userId}/orders`.
+   - Never use verbs in paths (use `POST /api/v1/orders`, NOT `/api/v1/createOrder`).
+2. **HTTP Verb Semantics**:
+   - `GET`: Safe and idempotent retrieval. Never produces side effects.
+   - `POST`: Resource creation or non-idempotent operations. Returns `201 Created` with a `Location` header.
+   - `PUT`: Complete resource replacement (idempotent).
+   - `PATCH`: Partial resource update.
+   - `DELETE`: Resource removal (idempotent). Returns `204 No Content`.
+3. **Standard HTTP Status Codes**:
+   - `200 OK`: Successful retrieval or synchronous update.
+   - `201 Created`: Successful creation of a resource.
+   - `204 No Content`: Successful action with no return payload.
+   - `400 Bad Request`: Validation failure or malformed payload.
+   - `401 Unauthorized`: Missing, expired, or invalid authentication credentials.
+   - `403 Forbidden`: Authenticated identity lacks required permissions.
+   - `404 Not Found`: Target resource does not exist.
+   - `409 Conflict`: Conflict with current state (e.g. unique constraint violation).
+   - `422 Unprocessable Entity`: Syntactically valid JSON, but fails semantic business validation.
+   - `500 Internal Server Error`: Unhandled server exception.
+4. **Pagination**:
+   - Large or unbounded collections must enforce cursor-based pagination: `?limit=20&cursor=dXNlcl8xMjM=`.
+   - Responses must return a standard envelope: `{ "data": [...], "hasMore": true, "nextCursor": "..." }`.
+5. **API Versioning**:
+   - All public APIs must be versioned in the URI path (`/v1/`) to guarantee backward compatibility.
+
+---
+
+## Database Design & Migration Policy
+
+1. **Version-Controlled Migrations**:
+   - All database schema changes must be version-controlled using migration tools (Flyway, Liquibase, Alembic, Prisma).
+   - Never execute manual DDL statements in staging or production.
+2. **Zero-Downtime / Expand-and-Contract Pattern**:
+   - Schema migrations must remain backward-compatible with active application instances.
+   - **Phase 1 (Expand)**: Add new columns, tables, or nullable fields.
+   - **Phase 2 (Deploy)**: Deploy application code that writes to the new structure.
+   - **Phase 3 (Contract)**: Remove deprecated columns or tables in a subsequent, separate release.
+3. **Indexing Discipline**:
+   - Every foreign key column must have an explicit index.
+   - Any column used in `WHERE`, `ORDER BY`, or `JOIN` conditions on high-cardinality tables must be indexed.
+4. **Transaction Boundaries**:
+   - Keep database transactions as short as possible.
+   - **Never hold database transactions open during external I/O** (network calls, email sending, third-party API calls).
+
+---
+
 ## General (Coding Projects / Any Language)
 
 This section applies to repositories that contain executable production code, regardless of language.

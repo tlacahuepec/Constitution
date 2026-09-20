@@ -40,12 +40,12 @@ Track progress one story at a time. Mark status as: `TODO`, `IN PROGRESS`, `DONE
 
 | # | Story | Status | Notes |
 |---|-------|--------|-------|
-| 19 | Define Test Pyramid — unit/integration/e2e layers | TODO | Coverage thresholds, mocking rules, test naming |
-| 20 | Add Code Review Rubric — `docs/code-review.md` | TODO | Reviewer duties, blocking vs non-blocking, SLA |
-| 21 | Add API Design Standards | TODO | REST conventions, error envelopes (RFC 7807), versioning |
-| 22 | Add Database & Migration Policy | TODO | Versioned migrations, indexing, transaction boundaries |
-| 23 | Add Code Documentation Standards | TODO | Docstring formats, inline comment rules |
-| 24 | Formalize SemVer Versioning Policy | TODO | MAJOR/MINOR/PATCH criteria, deprecation windows |
+| 19 | Define Test Pyramid — unit/integration/e2e layers | DONE | 70-80% unit, 15-20% int, 5-10% e2e; AAA pattern |
+| 20 | Add Code Review Rubric — `docs/code-review.md` | DONE | Reviewer duties, blocking vs non-blocking, SLA |
+| 21 | Add API Design Standards | DONE | REST conventions, status codes, cursor pagination |
+| 22 | Add Database & Migration Policy | DONE | Versioned migrations, expand-and-contract, indexes |
+| 23 | Add Code Documentation Standards | DONE | Public docstrings (Javadoc, Google, TSDoc) |
+| 24 | Formalize SemVer Versioning Policy | DONE | SemVer 2.0.0 and deprecation windows in Section 2 |
 
 ---
 
@@ -53,13 +53,13 @@ Track progress one story at a time. Mark status as: `TODO`, `IN PROGRESS`, `DONE
 
 | # | Story | Status | Notes |
 |---|-------|--------|-------|
-| 20 | Add Monitoring & Observability standard | TODO | Health endpoints, metrics, tracing |
-| 21 | Add Accessibility (a11y) standards | TODO | WCAG 2.1 AA, axe-core, ARIA |
-| 22 | Add Auth & Authorization patterns | TODO | OAuth2, RBAC, token storage, password hashing |
-| 23 | Add Data Privacy & PII Handling policy | TODO | Classification, encryption, retention, GDPR |
-| 24 | Add API Documentation requirement (OpenAPI) | TODO | Swagger/OpenAPI 3.x in CI |
-| 25 | Add Incident Management & Post-Mortem framework | TODO | Severity levels, escalation, blameless retros |
-| 26 | Add Deployment Strategies & Environment Management | TODO | Blue/green, canary, rollback, env tiers |
+| 25 | Add Monitoring & Observability standard | TODO | Health endpoints, metrics, tracing |
+| 26 | Add Accessibility (a11y) standards | TODO | WCAG 2.1 AA, axe-core, ARIA |
+| 27 | Add Auth & Authorization patterns | TODO | OAuth2, RBAC, token storage, password hashing |
+| 28 | Add Data Privacy & PII Handling policy | TODO | Classification, encryption, retention, GDPR |
+| 29 | Add API Documentation requirement (OpenAPI) | TODO | Swagger/OpenAPI 3.x in CI |
+| 30 | Add Incident Management & Post-Mortem framework | TODO | Severity levels, escalation, blameless retros |
+| 31 | Add Deployment Strategies & Environment Management | TODO | Blue/green, canary, rollback, env tiers |
 
 ---
 
@@ -83,3 +83,9 @@ Track progress one story at a time. Mark status as: `TODO`, `IN PROGRESS`, `DONE
 - **Story 16**: Add Structured JSON Logging, Correlation IDs, and Error Handling standards.
 - **Story 17**: Add OWASP Top 10 Security Annex (`docs/security.md`).
 - **Story 18**: Add Starter CI/CD Workflows (`templates/workflows/` for Python, Java, TypeScript, and VDD) and updated `adopt.sh` with `--workflow`.
+- **Story 19**: Define Test Pyramid (unit/integration/e2e layers, AAA pattern, mocking boundaries) in `CONSTITUTION.md`.
+- **Story 20**: Add Code Review Rubric & Guide (`docs/code-review.md`).
+- **Story 21**: Add API Design Standards (REST conventions, status codes, cursor pagination) in `docs/extensions.md`.
+- **Story 22**: Add Database & Migration Policy (versioned migrations, expand-and-contract pattern, indexes) in `docs/extensions.md`.
+- **Story 23**: Add Code Documentation Standards in `CONSTITUTION.md`.
+- **Story 24**: Formalize SemVer 2.0.0 and Deprecation Policy in `CONSTITUTION.md` Section 2.

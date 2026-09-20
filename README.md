@@ -21,6 +21,7 @@ It defines the non-negotiable standards for:
 - [Technology Extensions](./docs/extensions.md)
 - [Audit Guide](./docs/audit-guide.md)
 - [Security Standards (OWASP Top 10)](./docs/security.md)
+- [Code Review Guide](./docs/code-review.md)
 - [Contributing Guide](./CONTRIBUTING.md)
 - [Changelog](./CHANGELOG.md)
 

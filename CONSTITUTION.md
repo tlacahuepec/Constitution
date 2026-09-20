@@ -81,6 +81,15 @@ Imperative mood, reference issue, < 72 chars.
 
 **Git Town** is strongly recommended for complex stacked-branch work.
 
+### Semantic Versioning (SemVer 2.0.0)
+
+All repositories releasing versioned packages, APIs, or software artifacts must adhere strictly to [SemVer 2.0.0](https://semver.org/):
+
+- **MAJOR (`X.0.0`)**: Incompatible API changes, breaking data schema changes, or removed features.
+- **MINOR (`0.X.0`)**: Backward-compatible new functionality, new endpoints, or non-breaking extensions.
+- **PATCH (`0.0.X`)**: Backward-compatible bugfixes, security patches, or internal performance improvements.
+- **Deprecation Policy**: Features, endpoints, or APIs scheduled for removal must be marked `@deprecated` (with clear migration guidance in docs) for at least one MINOR release cycle prior to removal in the next MAJOR release.
+
 ## 3. Pull Request & Merging Rules
 
 Every change requires a Pull Request.
@@ -137,6 +146,27 @@ Artifact, workflow, documentation, template, and configuration repositories must
 - Language-appropriate tools are required for code (pytest, JUnit, etc.).
 - Artifact-appropriate tools are required for non-code repositories (JSON/YAML validation, Markdown linting, link checks, schema checks, or import/dry-run validation).
 - Formatting & linting **enforced** in CI where practical.
+
+#### The Test Pyramid & Testing Depth
+Executable software repositories must balance their test suites according to the Test Pyramid:
+
+1. **Unit Tests (70–80% of test suite)**:
+   - Validate isolated domain logic, business rules, algorithms, and models in memory.
+   - Must be fast (sub-second), deterministic, and execute without network, filesystem, or database I/O.
+2. **Integration Tests (15–20% of test suite)**:
+   - Validate interactions between modules and external boundaries (database queries, repository implementations, API controllers, message queues).
+   - Use ephemeral test databases (in-memory or Testcontainers).
+3. **End-to-End (E2E) & Contract Tests (5–10% of test suite)**:
+   - Validate critical user journeys and consumer-driven API contracts.
+
+#### Test Structure & Naming
+- Every test must follow the **Arrange-Act-Assert (AAA)** or **Given-When-Then** pattern with clear visual separation between setup, execution, and assertion.
+- Test names must explicitly describe the scenario and expected outcome: `test_<methodUnderTest>_<condition>_<expectedResult>()` or `should_<expectedResult>_when_<condition>()`.
+
+#### Mocking & Test Double Policies
+- **Never mock internal domain entities or business logic**: Domain models must always be real instances. If tests require mocking domain logic, the architecture is tightly coupled and must be refactored.
+- **Only mock external I/O boundaries**: Mock third-party HTTP APIs, payment gateways, external notification services, and network clients.
+- **Favor in-memory fakes over deep mock hierarchies**: When simulating an interface, write a simple in-memory fake implementation rather than complex, brittle mocking configurations.
 
 ### SOLID Principles (Mandatory for OOP and Modular Systems)
 
