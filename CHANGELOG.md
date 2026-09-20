@@ -4,6 +4,21 @@ All notable changes to the Engineering Constitution will be documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.1.0] - 2026-09-20
+
+### Added
+
+- **Section 0 — Adoption Guide: Classify Your Project**: New tiered adoption model with 4 project tiers (Prototype/Experiment → Personal Tool → Internal/Team → Production/Public). Projects classify themselves via a questionnaire and follow a compliance matrix that scales standards by tier.
+- **Compliance Matrix**: 12 flexible standards scaled by tier (Required ✅ / Recommended 💡 / Optional —) including GitFlow, SemVer, PR approval, environment tiers, deployment strategies, rollback triggers, docstrings, input validation, observability, OpenAPI, post-mortems, and accessibility. 35 standards remain always required at every tier (including TDD).
+- **Step 5 — Onboarding Plan**: Mandatory audit-and-backlog workflow when adopting the Constitution, including a removal story for explicitly documenting excluded higher-tier standards.
+- **Step 6 — Track Compliance Progress**: Tier 1/2 projects track compliance via a local `COMPLIANCE.md` file; Tier 3/4 projects use GitHub Issues with a `constitution` label and a milestone as their compliance dashboard.
+- **Tier Declaration Requirement**: Repositories must declare their Constitution tier in `README.md`.
+- **Immutable Rule 5 — No force-pushes on any branch**: Strengthened from protected-only to all branches. History is immutable once pushed.
+- **Immutable Rule 6 — No history rewrites after push**: Explicitly bans `git commit --amend`, `git rebase`, and any other history rewrite after pushing to a remote.
+- **Codebase & Directory Structure Standards**: Added mandatory standards in Section 5 covering Package by Feature (Screaming Architecture), Clean Architecture layering, stack-aware test placement (colocation vs mirror tree), folder depth limits (≤ 4), ban on `utils/` junk drawers, and consistent casing per language stack.
+- **Refactoring & Code Evolution Standards**: Added mandatory standards in Section 5 covering Pure Refactoring PRs, harmonized Boy Scout Rule (local hygiene vs structural PR separation), characterization tests before refactoring, Rule of Three with local readability precedence, Strangler Fig pattern for legacy migrations, Expand-Contract pattern for breaking interfaces, immediate dead code elimination, and feature flags for architectural shifts.
+- **Self-Compliance**: Constitution repository declares itself as 🔧 Tier 2 — Personal Tool in `README.md`.
+
 ## [2.0.0] - 2026-09-20
 
 ### Added
