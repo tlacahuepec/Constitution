@@ -9,9 +9,10 @@ Full document: https://github.com/tlacahuepec/Constitution/blob/main/CONSTITUTIO
 2. Never push directly to `main` or `dev`.
 3. All changes go through PRs with CI passing.
 4. No secrets ever in the repository.
-5. No force-pushes on protected branches.
-6. One logical change per PR (one issue per branch).
-7. CI must pass before any merge.
+5. No force-pushes on any branch — protected or feature. History is immutable once pushed.
+6. No `git commit --amend`, `git rebase`, or history rewrites after push. Create a new commit.
+7. One logical change per PR (one issue per branch).
+8. CI must pass before any merge.
 
 ## Verification Protocol
 
@@ -32,20 +33,27 @@ Full document: https://github.com/tlacahuepec/Constitution/blob/main/CONSTITUTIO
 
 ## Code and Artifact Generation Rules
 
+- Check `README.md` for project tier (🧪 T1, 🔧 T2, 🏢 T3, 🚀 T4).
 - Generate tests alongside executable production code.
-- Generate validation scripts/checklists alongside non-executable artifacts where practical.
+- Write characterization tests before refactoring existing code.
+- Package by Feature: organize code around business capabilities, not technical types.
+- Follow Clean Architecture: inward dependency direction only (Domain → Application → Infrastructure → Presentation).
+- Do not create catch-all `utils/` files; use single-purpose semantic modules.
+- Limit folder depth to ≤ 4 levels from source root.
+- Never mix refactoring and feature behavior changes in the same PR.
+- Follow the Boy Scout Rule only on local touched lines.
 - Use SOLID principles where software design is involved.
-- Follow the repository's existing patterns and conventions.
 - Never generate code, docs, workflows, prompts, or examples that contain hardcoded secrets or credentials.
 - Never suppress lint, PMD, or static analysis warnings. Fix the issue instead.
 - Prefer small, focused changes over large refactors.
-- Do not commit large model files, generated output batches, private images, or machine-specific artifacts unless explicitly allowed.
+- Do not commit large model files, generated output batches, private images, or machine-specific artifacts.
 
 ## Branch & Commit Conventions
 
 - Branch prefix: `feat/`, `fix/`, `hotfix/`, `release/`
 - Commit message: imperative mood, reference issue, < 72 chars
 - Example: `Add user authentication module (#42)`
+- Never force-push or amend pushed commits.
 
 ## Full Standards
 
