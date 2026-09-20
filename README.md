@@ -45,17 +45,17 @@ Run the adoption script to install agent instruction files, repository templates
 
 ```bash
 git clone https://github.com/tlacahuepec/Constitution.git /tmp/constitution
-# Install both agent files and repository templates (default)
-/tmp/constitution/scripts/adopt.sh --all /path/to/your/repo
+# Install all templates with specified tier and CI workflow
+/tmp/constitution/scripts/adopt.sh --all --tier 2 --workflow python /path/to/your/repo
+
+# Install public repository tamper defense (alerts on external fork PRs)
+/tmp/constitution/scripts/adopt.sh --guard /path/to/your/repo
 
 # Or install only agent instructions
 /tmp/constitution/scripts/adopt.sh --agents /path/to/your/repo
 
-# Or install only repository templates (PR, Spec, ADR, Checklist, Security)
-/tmp/constitution/scripts/adopt.sh --templates /path/to/your/repo
-
-# Or install starter CI workflow alongside templates (python, java, typescript, vdd)
-/tmp/constitution/scripts/adopt.sh --all --workflow python /path/to/your/repo
+# Or install only repository templates (PR, Spec, ADR, Checklist, Security, Compliance)
+/tmp/constitution/scripts/adopt.sh --templates --tier 2 /path/to/your/repo
 ```
 
 This installs:
@@ -71,6 +71,8 @@ This installs:
 | `docs/adr/ADR_TEMPLATE.md` | Architecture Decision Record template |
 | `docs/CODE_REVIEW_CHECKLIST.md` | Code review rubric (SOLID, readability, quality) |
 | `SECURITY.md` | Vulnerability reporting and security policy |
+| `COMPLIANCE.md` | Constitution compliance tracker (Tier 1 & 2) |
+| `.github/workflows/repo-guard.yml` | Tamper defense & alert workflow for public repos (`--guard`) |
 
 ### Manual Setup
 
