@@ -4,6 +4,16 @@ All notable changes to the Engineering Constitution will be documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.1.0] - 2026-09-20
+
+### Added
+
+- **Section 0 — Adoption Guide: Classify Your Project**: New tiered adoption model with 4 project tiers (Prototype/Experiment → Personal Tool → Internal/Team → Production/Public). Projects classify themselves via a questionnaire and follow a compliance matrix that scales standards by tier.
+- **Compliance Matrix**: 12 flexible standards scaled by tier (Required ✅ / Recommended 💡 / Optional —) including GitFlow, SemVer, PR approval, environment tiers, deployment strategies, rollback triggers, docstrings, input validation, observability, OpenAPI, post-mortems, and accessibility. 35 standards remain always required at every tier (including TDD).
+- **Step 5 — Onboarding Plan**: Mandatory audit-and-backlog workflow when adopting the Constitution, including a removal story for explicitly documenting excluded higher-tier standards.
+- **Step 6 — Track Compliance Progress**: Tier 1/2 projects track compliance via a local `COMPLIANCE.md` file; Tier 3/4 projects use GitHub Issues with a `constitution` label and a milestone as their compliance dashboard.
+- **Tier Declaration Requirement**: Repositories must declare their Constitution tier in `README.md`.
+
 ## [2.0.0] - 2026-09-20
 
 ### Added

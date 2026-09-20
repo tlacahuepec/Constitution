@@ -1,8 +1,122 @@
 # Engineering Constitution
 
-**Version 2.0** — September 2026  
+**Version 2.1** — September 2026  
 **Author**: tlacahuepec  
 **Applies to**: All repositories under tlacahuepec (software, documentation, workflow, template, artifact, or configuration repositories)
+
+## 0. Adoption Guide: Classify Your Project
+
+> Not every project is a production service. Before applying the Constitution,
+> classify your repository to determine which standards are **required** versus
+> **recommended** for your context. The Immutable Rules (Section 1) always
+> apply. Everything else scales with your project's tier.
+
+### Step 1 — Answer These Questions
+
+1. **Will this code be thrown away in days/weeks?** → If yes, you are **Tier 1**.
+2. **Does only one person use this, running locally?** → If yes, you are **Tier 2**.
+3. **Do multiple contributors or teams depend on this?** → If yes, you are **Tier 3**.
+4. **Is this deployed to real users, public, or business-critical?** → If yes, you are **Tier 4**.
+
+Always pick the **highest tier that applies**. A personal tool that becomes
+user-facing graduates to Tier 4 and must adopt the additional standards.
+
+### Step 2 — Identify Your Tier
+
+| Tier | Label | Description | Examples |
+|------|-------|-------------|----------|
+| 🧪 **1** | **Prototype / Experiment** | Throwaway spikes, research, learning repos, hackathon projects. Short-lived. | `fm24`, one-off data exploration notebooks |
+| 🔧 **2** | **Personal Tool** | Single-user, locally-run utilities kept long-term. No external consumers. | `local-comfy-workflows`, `TamperMonkey_VSCO_Scrapper` |
+| 🏢 **3** | **Internal / Team** | Multi-contributor repos, internal services, shared libraries, data pipelines. | `GameVault`, `stats-pipeline-consumer`, `Prompts` |
+| 🚀 **4** | **Production / Public** | User-facing apps, deployed APIs, open-source projects, business-critical services. | `Colmillo-Picks`, `Juzgon.com`, `cv-manager` |
+
+### Step 3 — Compliance Matrix
+
+The table below shows whether each scalable standard is **Required (✅)**,
+**Recommended (💡)**, or **Optional (—)** at each tier. Standards not listed
+here are **always required at every tier** (see the callout below the table).
+
+| Standard | 🧪 Tier 1 | 🔧 Tier 2 | 🏢 Tier 3 | 🚀 Tier 4 | Constitution Section |
+|----------|:---------:|:---------:|:---------:|:---------:|---------------------|
+| **Full GitFlow** (add `dev` + feat/fix/release/hotfix) | — | 💡 | ✅ | ✅ | §2 |
+| **SemVer formal versioning** | — | 💡 | ✅ | ✅ | §2 |
+| **At least 1 PR approval** | — | — | ✅ | ✅ | §3 |
+| **Environment tiers** (dev/staging/prod pipeline) | — | — | 💡 | ✅ | §4 |
+| **Blue/Green or Canary deployments** | — | — | 💡 | ✅ | §4 |
+| **Automated rollback triggers** | — | — | 💡 | ✅ | §4 |
+| **Docstrings on public APIs** | — | 💡 | ✅ | ✅ | §5 |
+| **Input validation with schema validators** | — | 💡 | ✅ | ✅ | §6 |
+| **Observability** (`/healthz`, `/readyz` endpoints) | — | — | 💡 | ✅ | §7 |
+| **OpenAPI 3.x documentation** | — | — | 💡 | ✅ | §7 |
+| **Incident management & post-mortems** | — | — | 💡 | ✅ | §7 |
+| **Accessibility** (WCAG 2.1 AA) | — | — | — | ✅ | §8 |
+
+> [!IMPORTANT]
+> **These 35 standards are always required at every tier — no exceptions:**
+> TDD, VFD/VDD, SDD, branch protection on `main`, no secrets, no force-pushes,
+> one change per PR, CI must pass, PR required, squash merge, CI linting +
+> tests + build + security scanning, Twelve-Factor configuration, SOLID
+> principles, Test Pyramid ratios, AAA test structure, mocking policy, code
+> readability hard limits, semantic naming, no warning suppressions, technical
+> debt 10% capacity, zero-tolerance secrets + scanning, forbidden files policy,
+> OWASP Top 10, structured JSON logging, domain-specific exceptions, no silent
+> catch blocks, RFC 7807 error envelopes, ADRs, README/CHANGELOG/docs, code
+> review rubric & SLA, and agent instruction files.
+
+### Step 4 — Document Your Tier
+
+Every repository must declare its tier in the project `README.md`:
+
+```markdown
+## Constitution Compliance
+
+**Project Tier**: 🔧 Tier 2 — Personal Tool
+**Constitution Version**: 2.1
+```
+
+When a project's scope changes (e.g., a personal tool becomes a deployed
+service), update the tier and adopt the newly required standards before the
+next release.
+
+### Step 5 — Onboarding Plan
+
+When adopting the Constitution into an existing or new repository:
+
+1. **Audit the current state**: Review the repository against the compliance matrix for your tier.
+2. **Create an Adoption Backlog**: For each missing standard, create a trackable story or task.
+3. **Create a removal story**: If the repository has standards from a higher tier that do not apply (e.g., `/healthz` endpoints in a CLI tool), create a story to explicitly document why they are excluded, rather than silently ignoring them.
+4. **Prioritize**: Address Immutable Rules first, then Required (✅) standards for your tier, then Recommended (💡) standards.
+
+### Step 6 — Track Compliance Progress
+
+Every repository must maintain visibility into its Constitution compliance:
+
+**For Tier 1 and Tier 2 projects** (prototypes, personal tools):
+
+- Create a `COMPLIANCE.md` file in the repository root.
+- Track which standards are adopted, in progress, or not applicable.
+- Update it as standards are implemented.
+
+```markdown
+# Constitution Compliance Tracker
+
+**Project Tier**: 🔧 Tier 2 — Personal Tool
+**Constitution Version**: 2.1
+
+| Standard | Status | Notes |
+|----------|--------|-------|
+| TDD | ✅ Done | pytest suite in place |
+| Branch protection on main | ✅ Done | PR-only merges enforced |
+| Full GitFlow (dev branch) | N/A | Tier 2 — using main only |
+| Docstrings on public APIs | 🔄 In Progress | 60% coverage |
+```
+
+**For Tier 3 and Tier 4 projects** (team/internal, production/public):
+
+- Use **GitHub Issues** with a `constitution` label to track each missing standard.
+- Create a **GitHub Milestone** (e.g., "Constitution v2.1 Compliance") to group and monitor progress.
+- Each issue should reference the specific Constitution section and acceptance criteria.
+- Close issues as standards are adopted; the milestone progress bar serves as the compliance dashboard.
 
 ## 1. Preamble & Core Principles
 
