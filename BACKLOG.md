@@ -8,10 +8,10 @@ Track progress one story at a time. Mark status as: `TODO`, `IN PROGRESS`, `DONE
 
 | # | Story | Status | Notes |
 |---|-------|--------|-------|
-| 1 | Fix `CONTRIBUTING.md` — add VDD support, align with v1.3 | TODO | Line 12 still says TDD-only |
-| 2 | Fix `.github/PULL_REQUEST_TEMPLATE.md` — support VDD path | TODO | Checklist assumes code-only PRs |
-| 3 | Align `templates/AGENTS.md` — add SOLID mention | TODO | Other 3 templates have it, this one doesn't |
-| 4 | Add Gitleaks + shellcheck to `ci.yml` | TODO | Constitution mandates secret scanning but CI doesn't do it |
+| 1 | Fix `CONTRIBUTING.md` — add VDD support, align with v1.3 | DONE | VFD & SDD added, TDD/VDD dual-path |
+| 2 | Fix `.github/PULL_REQUEST_TEMPLATE.md` — support VDD path | DONE | Dual-path TDD/VDD, SOLID, no suppressions |
+| 3 | Align `templates/AGENTS.md` — add SOLID mention | DONE | Added Always section with SOLID & tests/validation |
+| 4 | Add Gitleaks to `ci.yml` | DONE | Added scan-secrets job with gitleaks-action |
 | 5 | Expand `adopt.sh` — optionally install PR template + markdownlint | TODO | Currently only copies 4 agent files |
 
 ---
@@ -60,4 +60,7 @@ Track progress one story at a time. Mark status as: `TODO`, `IN PROGRESS`, `DONE
 
 ## Completed
 
-_None yet._
+- **Story 1**: Fix `CONTRIBUTING.md` — added VDD & SDD support, aligned with Constitution v1.3.
+- **Story 2**: Fix `.github/PULL_REQUEST_TEMPLATE.md` — added dual-path TDD/VDD verification, SOLID check, zero suppressions check, forbidden files check.
+- **Story 3**: Align `templates/AGENTS.md` — added Always section with SOLID principles and test/validation mandates.
+- **Story 4**: Add Gitleaks secret scanning job to `.github/workflows/ci.yml`.

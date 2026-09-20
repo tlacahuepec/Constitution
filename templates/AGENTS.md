@@ -49,6 +49,13 @@ Full document: https://github.com/tlacahuepec/Constitution/blob/main/CONSTITUTIO
 - Do NOT make destructive changes (delete branches, reset history) without explicit human authorization.
 - Do NOT skip tests or validation because the repository has no traditional production code.
 
+## Always
+
+- Always add tests for executable code.
+- Always add validation for non-executable artifacts.
+- Use SOLID principles where software design is involved.
+- Prefer small, focused changes.
+
 ## Full Standards
 
 Read `CONSTITUTION.md` in this repository for complete standards on branching, CI/CD, security, documentation, and technology-specific extensions.
