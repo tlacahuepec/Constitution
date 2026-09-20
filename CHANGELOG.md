@@ -15,6 +15,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 - **Tier Declaration Requirement**: Repositories must declare their Constitution tier in `README.md`.
 - **Immutable Rule 5 — No force-pushes on any branch**: Strengthened from protected-only to all branches. History is immutable once pushed.
 - **Immutable Rule 6 — No history rewrites after push**: Explicitly bans `git commit --amend`, `git rebase`, and any other history rewrite after pushing to a remote.
+- **Codebase & Directory Structure Standards**: Added mandatory standards in Section 5 covering Package by Feature (Screaming Architecture), Clean Architecture layering, stack-aware test placement (colocation vs mirror tree), folder depth limits (≤ 4), ban on `utils/` junk drawers, and consistent casing per language stack.
+- **Refactoring & Code Evolution Standards**: Added mandatory standards in Section 5 covering Pure Refactoring PRs, harmonized Boy Scout Rule (local hygiene vs structural PR separation), characterization tests before refactoring, Rule of Three with local readability precedence, Strangler Fig pattern for legacy migrations, Expand-Contract pattern for breaking interfaces, immediate dead code elimination, and feature flags for architectural shifts.
 - **Self-Compliance**: Constitution repository declares itself as 🔧 Tier 2 — Personal Tool in `README.md`.
 
 ## [2.0.0] - 2026-09-20

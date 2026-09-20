@@ -52,14 +52,19 @@ here are **always required at every tier** (see the callout below the table).
 | **Accessibility** (WCAG 2.1 AA) | — | — | — | ✅ | §8 |
 
 > [!IMPORTANT]
-> **These 35 standards are always required at every tier — no exceptions:**
+> **These standards are always required at every tier — no exceptions:**
 > TDD, VFD/VDD, SDD, branch protection on `main`, no secrets, no force-pushes
 > on any branch, no history rewrites (`--amend`/`rebase`) after push,
 > one change per PR, CI must pass, PR required, squash merge, CI linting +
 > tests + build + security scanning, Twelve-Factor configuration, SOLID
 > principles, Test Pyramid ratios, AAA test structure, mocking policy, code
 > readability hard limits, semantic naming, no warning suppressions, technical
-> debt 10% capacity, zero-tolerance secrets + scanning, forbidden files policy,
+> debt 10% capacity, folder organization standards (package by feature,
+> Clean Architecture layering, stack-aware test placement, folder depth ≤ 4,
+> no utils junk drawers, consistent casing), refactoring standards (pure
+> refactoring PRs, harmonized Boy Scout local hygiene, characterization tests,
+> Rule of Three, Strangler Fig pattern, Expand-Contract, dead code elimination,
+> feature flags), zero-tolerance secrets + scanning, forbidden files policy,
 > OWASP Top 10, structured JSON logging, domain-specific exceptions, no silent
 > catch blocks, RFC 7807 error envelopes, ADRs, README/CHANGELOG/docs, code
 > review rubric & SLA, and agent instruction files.
@@ -347,6 +352,63 @@ Code is read far more often than it is written. Clean, readable code is non-nego
   - Every `TODO` or `FIXME` comment in code must reference a tracked issue: `TODO(#123): explanation`.
   - Unreferenced `TODO` or `FIXME` comments are prohibited and must be blocked during code review.
   - Teams should allocate ≥ 10% of engineering capacity to technical debt reduction and refactoring.
+
+### Codebase & Directory Structure Standards
+
+A clear, predictable folder structure communicates domain intent and eliminates structural debt:
+
+1. **Package by Feature (Screaming Architecture)**:
+   - Organize code around business domains or capabilities (`auth/`, `catalog/`, `billing/`) rather than technical archetypes (`controllers/`, `models/`, `views/`).
+   - High-level directory names must communicate the business purpose of the project at a glance.
+2. **Clean Architecture & Inward-Only Dependency Direction**:
+   - Within any module or service, code must honor strict dependency direction: Domain (pure business entities, zero external imports) $\to$ Application (use cases, orchestration, port interfaces) $\to$ Infrastructure (adapters, databases, external HTTP clients) $\to$ Presentation (routers, CLI handlers, controllers, UI).
+   - Outer layers depend on inner abstractions; inner layers must never import outer details.
+3. **Flat over Nested (Folder Depth ≤ 4 Levels)**:
+   - Folder depth must not exceed 4 directory levels measured from the project source root (`src/` or package root).
+   - When combining Package by Feature with Clean Architecture, keep feature folders flat (e.g., `src/catalog/models.py`, `src/catalog/service.py`, `src/catalog/repository.py`) rather than introducing deep sub-directory hierarchies for individual layers.
+4. **Stack-Aware Test Placement**:
+   - **TypeScript / Web**: Colocate test files directly adjacent to implementation files (`user.test.ts` next to `user.ts`) or in local `__tests__/` subdirectories.
+   - **Python / JVM (Java & Kotlin)**: Maintain a strict mirror test tree (`src/services/catalog.py` $\leftrightarrow$ `tests/services/test_catalog.py`, `src/main/kotlin/...` $\leftrightarrow$ `src/test/kotlin/...`). Test files must never be placed inside production packaging roots to prevent bundling test code into release artifacts.
+5. **Shared Module Boundaries (No "Utils" Junk Drawers)**:
+   - Catch-all modules such as `utils.py`, `common/`, or `helpers.ts` are strictly prohibited.
+   - Reusable logic must be extracted into single-purpose, semantically-named modules (e.g., `datetime_helpers.py`, `crypto.py`, `retry_policy.py`).
+   - Logic may only be promoted to a shared module if it is actively consumed by 2 or more distinct features.
+6. **Consistent Directory & File Casing**:
+   - **Python**: `snake_case/` for all directories and file names (`catalog_storage.py`).
+   - **TypeScript / Web**: `kebab-case/` for general files and directories (`catalog-storage.ts`), `PascalCase` for React/UI components (`CatalogCard.tsx`).
+   - **Kotlin / Java**: `PascalCase` matching class names (`CatalogStorage.kt`), standard lower-case package namespaces.
+
+### Refactoring & Code Evolution Standards
+
+Refactoring is a disciplined engineering practice, not casual tinkering:
+
+1. **Pure Refactoring PRs**:
+   - A pull request must either modify structure (refactoring) OR alter behavior (feature/bugfix), never both.
+   - Refactoring PRs must result in zero external behavior changes, proven by existing tests passing before and after without modification.
+2. **Boy Scout Rule Harmonization (Local Hygiene vs. Structural Refactoring)**:
+   - **Local Hygiene**: Small, low-risk cleanups (renaming poorly named local variables, correcting typos, fixing misleading comments) are encouraged within feature PRs *only on lines or functions directly modified by the feature*.
+   - **Structural Refactoring**: Any refactoring spanning multiple functions, classes, files, or public signatures must be executed in an isolated, dedicated pre-refactor PR.
+3. **Characterization Tests Before Refactoring**:
+   - Never refactor legacy, undocumented, or uncovered code without first writing regression or characterization tests.
+   - Verify that characterization tests pass green against the existing implementation before altering production code structure.
+4. **Rule of Three (Defer Shared Abstractions)**:
+   - Duplicate code once or twice before creating shared abstractions. Only extract shared cross-module base classes, generic interfaces, or utilities when a pattern is repeated across 3 or more distinct call sites.
+   - *Local Readability Precedence*: Within a single file or function, extract local private helper functions whenever required to obey the ≤ 30 lines per function limit, regardless of repetition count.
+5. **Strangler Fig Pattern for Legacy Subsystems**:
+   - Complex subsystem replacements or major architectural migrations must never be attempted as "big bang" rewrites.
+   - Introduce an intercepting facade or adapter interface, incrementally route calls to the new implementation module by module, and decommission legacy code only after all callers have migrated.
+6. **Expand-Contract Pattern for Breaking Code Interfaces**:
+   - When modifying public methods, classes, or interfaces, follow the Expand-Contract pattern across PRs:
+     1. *Expand*: Introduce the new interface alongside the old one.
+     2. *Migrate*: Transition consumers to the new interface across subsequent commits or PRs.
+     3. *Contract*: Mark the old interface `@deprecated("Use newMethod() instead. Removal in #issue")`.
+     4. *Purge*: Remove the deprecated interface in the next planned breaking release milestone.
+7. **Dead Code & Commented-Out Code Elimination**:
+   - Commented-out code, unreachable branches, unreferenced private methods, and unused imports must be deleted immediately.
+   - Git history is the permanent audit log and backup.
+   - *Exemption*: Methods undergoing active Expand-Contract migration are exempt from dead-code deletion only while marked `@deprecated` with an open tracking issue, for a maximum of one release cycle.
+8. **Feature Flags for Architectural Transitions**:
+   - Deep structural refactorings spanning multiple commits or PRs must be gated behind runtime feature flags or configuration switches so that protected branches (`main` and `dev`) remain continuously deployable and green at every intermediate step.
 
 ## 6. Security, Input Validation & Secrets
 
