@@ -15,7 +15,7 @@ Closes #XX
 
 ## Checklist
 
-- [ ] I have read and followed the [Engineering Constitution](CONSTITUTION.md)
+- [ ] I have read and followed the [Engineering Constitution](https://github.com/tlacahuepec/Constitution/blob/main/CONSTITUTION.md)
 - [ ] **Verification-First Development**:
   - [ ] *For Code*: Followed TDD (tests written and failing first); all tests pass
   - [ ] *For Artifacts/Docs*: Followed VDD (validation method defined first); all validation checks pass
