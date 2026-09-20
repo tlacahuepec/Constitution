@@ -1,6 +1,6 @@
 # Engineering Constitution
 
-**Version 1.3** — June 2026  
+**Version 2.0** — September 2026  
 **Author**: tlacahuepec  
 **Applies to**: All repositories under tlacahuepec (software, documentation, workflow, template, artifact, or configuration repositories)
 
@@ -136,6 +136,21 @@ Artifact, workflow, documentation, template, and configuration repositories must
 - Large-file or forbidden-file checks when the repository must not store binaries, models, generated outputs, or credentials
 - Repository-specific validation scripts where useful
 
+### Environment Management & Deployment Strategies
+
+1. **Environment Tiers**:
+   - **Local**: Development workstations with mocked or containerized local services.
+   - **Development (`dev`)**: Continuous integration environment automatically deployed on merge to `dev`.
+   - **Staging**: Production-mirror environment with anonymized or synthetic data for pre-release validation.
+   - **Production (`main`)**: Production environment deployed only from verified releases.
+2. **Twelve-Factor Configuration**:
+   - Configuration must strictly be separated from code and injected via environment variables.
+   - Code artifacts (container images, binaries) must be identical across staging and production.
+3. **Zero-Downtime Deployment Patterns**:
+   - Deployments must utilize **Blue/Green** or **Canary** rollout strategies.
+   - Production deployments must verify the `/readyz` endpoint before shifting traffic.
+   - Automated rollback triggers must revert deployments instantly if error rates spike (> 1%) or latency exceeds thresholds.
+
 ## 5. Testing, Quality & Code Design Standards
 
 ### Testing & Verification Standards
@@ -243,13 +258,19 @@ Code is read far more often than it is written. Clean, readable code is non-nego
 - API errors must return consistent structured envelopes (RFC 7807 Problem Details recommended).
 - Fail fast on startup if configuration or required dependencies are missing.
 
-### Documentation & Architecture Decisions
+### Monitoring, Metrics & Tracing
+- Services must expose `/healthz` (liveness) and `/readyz` (readiness) endpoints.
+- Collect and track the Four Golden Signals (Latency, Traffic, Errors, Saturation).
+- Follow the observability standards in [`docs/observability.md`](./docs/observability.md).
+
+### Documentation, APIs & Architecture Decisions
 - Clear `README.md`
 - This `CONSTITUTION.md`
 - `docs/` folder when needed
 - `CHANGELOG.md` or automated releases
-- For artifact/workflow repositories, every reusable artifact should include enough documentation to reproduce and validate it locally.
+- **API Documentation (OpenAPI 3.x)**: All HTTP services must maintain an OpenAPI 3.x specification generated from code or validated against code in CI to prevent contract drift.
 - **Architecture Decision Records (ADRs)**: All significant architectural decisions (framework choices, persistence strategies, API contracts, cross-cutting patterns) must be recorded as an ADR in `docs/adr/` using `templates/ADR_TEMPLATE.md`.
+- **Incident Management & Blameless Post-Mortems**: Production outages (SEV1/SEV2) require a blameless post-mortem retrospective conducted within 5 business days using `templates/POST_MORTEM_TEMPLATE.md`. Action items must be tracked as GitHub issues.
 
 ## 8. Technology-Specific Extensions
 

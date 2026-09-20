@@ -49,17 +49,17 @@ Track progress one story at a time. Mark status as: `TODO`, `IN PROGRESS`, `DONE
 
 ---
 
-## Phase 4: Observability, Accessibility & Culture (v2.0)
+## Phase 4: Observability, Accessibility & Operations (v2.0)
 
 | # | Story | Status | Notes |
 |---|-------|--------|-------|
-| 25 | Add Monitoring & Observability standard | TODO | Health endpoints, metrics, tracing |
-| 26 | Add Accessibility (a11y) standards | TODO | WCAG 2.1 AA, axe-core, ARIA |
-| 27 | Add Auth & Authorization patterns | TODO | OAuth2, RBAC, token storage, password hashing |
-| 28 | Add Data Privacy & PII Handling policy | TODO | Classification, encryption, retention, GDPR |
-| 29 | Add API Documentation requirement (OpenAPI) | TODO | Swagger/OpenAPI 3.x in CI |
-| 30 | Add Incident Management & Post-Mortem framework | TODO | Severity levels, escalation, blameless retros |
-| 31 | Add Deployment Strategies & Environment Management | TODO | Blue/green, canary, rollback, env tiers |
+| 25 | Add Monitoring & Observability standard | DONE | `/healthz`, `/readyz`, Golden Signals in `docs/observability.md` |
+| 26 | Add Accessibility (a11y) standards | DONE | WCAG 2.1 AA, contrast, keyboard in `docs/extensions.md` |
+| 27 | Add Auth & Authorization patterns | DONE | OAuth2, OIDC, RBAC, Least Privilege in `docs/security.md` |
+| 28 | Add Data Privacy & PII Handling policy | DONE | Classification, encryption at rest, data masking in `docs/security.md` |
+| 29 | Add API Documentation requirement (OpenAPI) | DONE | OpenAPI 3.x CI validation mandate in Section 7 |
+| 30 | Add Incident Management & Post-Mortem framework | DONE | `templates/POST_MORTEM_TEMPLATE.md` + 5-day policy |
+| 31 | Add Deployment Strategies & Environment Management | DONE | Blue/Green, Canary, automated rollbacks in Section 4 |
 
 ---
 
@@ -89,3 +89,14 @@ Track progress one story at a time. Mark status as: `TODO`, `IN PROGRESS`, `DONE
 - **Story 22**: Add Database & Migration Policy (versioned migrations, expand-and-contract pattern, indexes) in `docs/extensions.md`.
 - **Story 23**: Add Code Documentation Standards in `CONSTITUTION.md`.
 - **Story 24**: Formalize SemVer 2.0.0 and Deprecation Policy in `CONSTITUTION.md` Section 2.
+- **Story 25**: Add Monitoring & Observability standards (`docs/observability.md`).
+- **Story 26**: Add Accessibility (a11y) standards (WCAG 2.1 AA) in `docs/extensions.md`.
+- **Story 27**: Add Authentication & Authorization standards (OAuth2, OIDC, RBAC) in `docs/security.md`.
+- **Story 28**: Add Data Privacy & PII Handling policy (classification, encryption, masking) in `docs/security.md`.
+- **Story 29**: Add OpenAPI 3.x CI validation mandate in `CONSTITUTION.md`.
+- **Story 30**: Add Incident Management & Blameless Post-Mortem framework (`templates/POST_MORTEM_TEMPLATE.md`).
+- **Story 31**: Add Deployment Strategies (Blue/Green, Canary) & Environment Management in `CONSTITUTION.md`.
+
+---
+
+🎉 **ALL 31 EXPANSION STORIES COMPLETED — CONSTITUTION VERSION 2.0 RELEASED!**

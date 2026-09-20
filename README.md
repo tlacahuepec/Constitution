@@ -1,26 +1,27 @@
 # Engineering Constitution
 
-This repository contains the official **Engineering Constitution** that governs **all** software development across every tlacahuepec repository.
+This repository contains the official **Engineering Constitution (Version 2.0)** that governs **all** software and artifact development across every tlacahuepec repository.
 
 It defines the non-negotiable standards for:
 
-- Branching & Git workflow
-- CI/CD
-- Merging rules
-- Testing (TDD)
-- Code quality
-- Security
-- Documentation
-- Contribution process
+- Branching & Git workflow (GitFlow + SemVer 2.0.0)
+- Verification-First Development (TDD for code, VDD for non-code artifacts)
+- SOLID principles & code readability limits
+- Security, OWASP Top 10 mitigations & Data Privacy (PII)
+- Structured JSON logging, correlation IDs & error handling
+- Monitoring, health endpoints & observability
+- Code review rubrics & blameless post-mortems
+- Automated CI/CD pipelines & zero-downtime deployment strategies
 
 **This is the single source of truth.** Every repository (Python, Kotlin/Android, Java, TypeScript, Pascal, Assembly, or any other technology) must follow it.
 
 ## Quick Links
 
-- [Full Constitution](./CONSTITUTION.md)
+- [Full Constitution (v2.0)](./CONSTITUTION.md)
 - [Technology Extensions](./docs/extensions.md)
 - [Audit Guide](./docs/audit-guide.md)
 - [Security Standards (OWASP Top 10)](./docs/security.md)
+- [Monitoring & Observability Standards](./docs/observability.md)
 - [Code Review Guide](./docs/code-review.md)
 - [Contributing Guide](./CONTRIBUTING.md)
 - [Changelog](./CHANGELOG.md)

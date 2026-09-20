@@ -210,6 +210,28 @@ All HTTP APIs must adhere to standard RESTful design conventions:
 
 ---
 
+## Accessibility (a11y) Standards
+
+All user-facing frontend web applications and mobile interfaces must comply with **WCAG 2.1 Level AA** standards:
+
+1. **Semantic HTML & Native Elements**:
+   - Use standard semantic HTML5 elements (`<button>`, `<a href>`, `<nav>`, `<main>`, `<header>`, `<article>`) instead of generic `<div>` elements with `onClick` handlers.
+   - All interactive controls must have accessible names (`aria-label` or visible text).
+2. **Keyboard Navigation & Focus Management**:
+   - All interactive elements must be fully operable using keyboard alone (`Tab`, `Shift+Tab`, `Enter`, `Space`, `Escape`).
+   - Focus order must follow a logical reading sequence.
+   - Never remove visible focus rings (`outline: none` without a custom `:focus-visible` replacement is prohibited).
+3. **Contrast Ratios**:
+   - Normal text (< 18pt or < 14pt bold) must maintain a minimum contrast ratio of **4.5:1** against its background.
+   - Large text (≥ 18pt or ≥ 14pt bold) and active UI components must maintain a minimum contrast ratio of **3.0:1**.
+4. **Images & Media**:
+   - Every informative `<img>` must provide descriptive `alt` text. Decorative images must specify `alt=""`.
+   - Video and audio content must provide captions or transcripts.
+5. **Automated Accessibility Testing in CI**:
+   - Frontend web repositories must execute automated accessibility checks using `@axe-core/playwright`, `cypress-axe`, or `pa11y` in CI, failing builds on critical or serious violations.
+
+---
+
 ## General (Coding Projects / Any Language)
 
 This section applies to repositories that contain executable production code, regardless of language.

@@ -4,6 +4,41 @@ All notable changes to the Engineering Constitution will be documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.0.0] - 2026-09-20
+
+### Added
+- **SOLID Principles & Clean Code Design**: Operational rules for SRP (class size ≤ 300 lines), OCP, LSP, ISP, and DIP in Section 5.
+- **Code Readability & Complexity Limits**: Non-negotiable limits on function length (≤ 30 lines), file length (≤ 300 lines), cyclomatic complexity (≤ 10), and nesting depth (≤ 3) in Section 5.
+- **The Test Pyramid & Mocking Boundaries**: Codified Unit (70–80%), Integration (15–20%), and E2E (5–10%) layers with Arrange-Act-Assert structure. Absolute ban on mocking internal domain logic.
+- **Technical Debt Policy**: Mandatory issue tracking for all `TODO(#123)` and `FIXME(#123)` comments with dedicated capacity allocation.
+- **Input Validation & System Boundaries**: Mandatory schema validation (Pydantic, Zod, Jakarta) at system gateways in Section 6.
+- **Structured Logging & Error Handling**: JSON structured logs, semantic levels, request correlation IDs (`X-Correlation-ID`), and RFC 7807 error envelopes in Section 7.
+- **OWASP Top 10 Security Annex**: Comprehensive engineering mitigations guide in `docs/security.md`.
+- **Data Privacy & PII Handling**: 4-tier data classification, field-level encryption (AES-256-GCM), and test data masking in lower environments.
+- **Monitoring & Observability Standards**: Dual health endpoints (`/healthz` vs `/readyz`), Four Golden Signals, Prometheus format, and OpenTelemetry in `docs/observability.md`.
+- **Accessibility (a11y) Standards**: WCAG 2.1 Level AA compliance, contrast ratios, and automated CI checks in `docs/extensions.md`.
+- **API Design & Database Migration Policy**: RESTful design conventions, cursor pagination, and zero-downtime expand-and-contract migrations in `docs/extensions.md`.
+- **Code Review Guide & Rubric**: Turnaround SLA, blocking vs non-blocking classifications (`nit:`), and 5-dimension review rubric in `docs/code-review.md`.
+- **Semantic Versioning Policy**: Codified SemVer 2.0.0 and deprecation windows in Section 2.
+- **Deployment Strategies & Environment Tiers**: Blue/Green and Canary rollouts with automated rollback triggers in Section 4.
+- **Complete Templates Library in `templates/`**:
+  - `SPEC_TEMPLATE.md` (SDD feature specification)
+  - `ADR_TEMPLATE.md` (Architecture Decision Records)
+  - `AUDIT_REPORT_TEMPLATE.md` (Paired with `docs/audit-guide.md`)
+  - `CODE_REVIEW_CHECKLIST.md` (PR review rubric)
+  - `SECURITY.md` (Vulnerability disclosure policy)
+  - `POST_MORTEM_TEMPLATE.md` (Blameless incident retrospective)
+  - `PULL_REQUEST_TEMPLATE.md` (Dual-path PR template)
+  - Starter CI workflows in `templates/workflows/` (`python-ci.yml`, `java-ci.yml`, `typescript-ci.yml`, `vdd-ci.yml`).
+- **Repository Audit Guide**: 10 categories, 80+ check audit engine in `docs/audit-guide.md`.
+- **Modular Adoption Script**: Upgraded `scripts/adopt.sh` supporting `--agents`, `--templates`, `--all`, and `--workflow <type>`.
+- **Java / JVM Technology Extension**: Added Google Java Format, SpotBugs, JUnit 5 + JaCoCo (≥ 80% coverage) to `docs/extensions.md`.
+
+### Changed
+- Upgraded PR template and `CONTRIBUTING.md` to dual-path Verification-First Development (TDD/VDD).
+- Added Gitleaks secret scanning to repo CI workflow.
+- Synchronized all AI agent templates (`CLAUDE.md`, `AGENTS.md`, Copilot, Cursor).
+
 ## [1.3] - 2026-06-06
 
 ### Added

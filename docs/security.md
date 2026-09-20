@@ -134,3 +134,37 @@ SSRF flaws occur whenever a web application fetches a remote resource without va
    - Private networks: `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`
    - Cloud metadata services: `169.254.169.254`
 3. **Disable Redirects**: Disable HTTP redirect following on backend HTTP clients that fetch user-supplied URLs.
+
+---
+
+## Data Privacy & PII Handling Standards
+
+Repositories storing or processing user data must enforce strict privacy controls:
+
+### 1. Data Classification Tiers
+- **Public**: Non-sensitive data intended for public consumption.
+- **Internal**: Internal organizational documentation, non-sensitive telemetry.
+- **Confidential**: Business-sensitive metrics, internal architectural documentation.
+- **Restricted (PII & Secrets)**: Personally Identifiable Information (names, emails, phone numbers, IP addresses, physical addresses, payment cards, national IDs) and credentials.
+
+### 2. Encryption & Storage Rules
+- **Field-Level Encryption**: Sensitive PII fields must be encrypted at rest in the database using **AES-256-GCM** before persistence.
+- **Data Masking in Lower Environments**: Development, staging, and local environments must **never** load raw production databases containing user PII. Data must be scrubbed, anonymized, or synthesized using test data generators.
+
+### 3. Data Retention & Deletion (GDPR / CCPA)
+- Applications must support automated "Right to be Forgotten" workflows that hard-delete or irreversibly anonymize user records upon verified request.
+- Establish automated data retention policies: purge transient logs, temporary uploads, and expired tokens on a scheduled basis (e.g. 30–90 days).
+
+---
+
+## Authentication & Authorization Patterns
+
+### 1. Identity & Authentication Protocols
+- Use industry-standard identity protocols: **OAuth 2.0** and **OpenID Connect (OIDC)**. Never implement custom, home-grown authentication handshakes.
+- Authentication tokens (JWT) must use cryptographically signed algorithms (`EdDSA`, `ES256`, or `RS256`). Symmetric `HS256` is discouraged across distributed systems.
+- Always validate token signatures, expiration (`exp`), issuer (`iss`), and audience (`aud`) on the server.
+
+### 2. Authorization Enforcement
+- Implement **Role-Based Access Control (RBAC)** or **Attribute-Based Access Control (ABAC)** at the API gateway and service controller level.
+- Enforce the **Principle of Least Privilege**: API clients and service tokens must only have permissions for specific scopes required for their tasks.
+- Never rely on client-side state for privilege checks. Re-evaluate permissions on every incoming request.
