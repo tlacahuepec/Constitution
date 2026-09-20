@@ -4,6 +4,16 @@ All notable changes to the Engineering Constitution will be documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.2.0] - 2026-09-20
+
+### Added
+
+- **Public Repository Protection & Tamper Defense**: Added dedicated security guide in `docs/security.md` covering fork PR threat models, mandatory GitHub settings, and automated tamper alerts.
+- **Repo Guard Starter Workflow (`templates/workflows/repo-guard.yml`)**: Automated security workflow that detects external fork PRs, blocks unauthorized modifications to `.github/workflows/`, and alerts repository owners via PR comments and optional webhooks.
+- **Compliance Tracker Template (`templates/COMPLIANCE_TEMPLATE.md`)**: Turnkey tracking document for Tier 1 and Tier 2 projects covering all 49 Constitution standards and removal story documentation.
+- **Adoption Script Enhancements (`scripts/adopt.sh`)**: Added `--tier <1|2|3|4>` flag to initialize project tier and install `COMPLIANCE.md`, and `--guard` flag to install the Repo Guard workflow.
+- **Agent Instruction Templates Synchronized**: Updated `AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md`, and `cursorrules` with the universal force-push/amend ban, folder depth limits, and refactoring standards.
+
 ## [2.1.0] - 2026-09-20
 
 ### Added

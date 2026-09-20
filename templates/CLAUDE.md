@@ -9,9 +9,10 @@ Full document: https://github.com/tlacahuepec/Constitution/blob/main/CONSTITUTIO
 2. Never push directly to `main` or `dev`.
 3. All changes go through PRs with CI passing.
 4. No secrets ever in the repository.
-5. No force-pushes on protected branches.
-6. One logical change per PR (one issue per branch).
-7. CI must pass before any merge.
+5. No force-pushes on any branch — protected or feature. History is immutable once pushed.
+6. No `git commit --amend`, `git rebase`, or history rewrites after push. Create a new commit.
+7. One logical change per PR (one issue per branch).
+8. CI must pass before any merge.
 
 ## Verification Protocol (mandatory)
 
@@ -33,6 +34,7 @@ Full document: https://github.com/tlacahuepec/Constitution/blob/main/CONSTITUTIO
 
 ## Workflow
 
+- Check `README.md` for project tier (🧪 T1, 🔧 T2, 🏢 T3, 🚀 T4) to align on standards.
 - Branch from `dev` using `feat/`, `fix/`, `hotfix/`, or `release/` prefix.
 - Commit messages: imperative mood, reference issue, < 72 chars.
 - Before pushing: run linter, formatter, tests, and/or validation scripts.
@@ -41,14 +43,20 @@ Full document: https://github.com/tlacahuepec/Constitution/blob/main/CONSTITUTIO
 ## Agent-Specific Rules
 
 - Read `CONSTITUTION.md` before starting any significant work.
-- Identify whether the repo is executable software or an artifact/workflow/documentation repo.
+- Check project tier in `README.md` before choosing which standards apply.
 - Never commit directly to `main` or `dev`.
+- Never use `git push --force` or `--amend` after remote push.
+- Never mix refactoring and feature behavior changes in the same PR.
+- Never create catch-all `utils/` or `common/` files; keep folder depth ≤ 4 levels.
 - Never bypass CI or skip hooks (`--no-verify`).
 - Never suppress lint, PMD, or static analysis warnings. Fix the issue instead.
 - Never self-approve — wait for human review.
 - Never make destructive changes without explicit human authorization.
-- Always add tests for executable code.
-- Always add validation for non-executable artifacts.
+- Always add tests for executable code (TDD).
+- Always add validation for non-executable artifacts (VDD).
+- Write characterization tests before refactoring existing code.
+- Package by Feature and enforce Clean Architecture inward dependency flow.
+- Follow the Boy Scout Rule only for local touched lines.
 - Use SOLID principles where software design is involved.
 - Prefer small, focused changes.
 

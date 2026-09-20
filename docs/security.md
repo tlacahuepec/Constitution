@@ -183,3 +183,39 @@ Repositories storing or processing user data must enforce strict privacy control
 - Implement **Role-Based Access Control (RBAC)** or **Attribute-Based Access Control (ABAC)** at the API gateway and service controller level.
 - Enforce the **Principle of Least Privilege**: API clients and service tokens must only have permissions for specific scopes required for their tasks.
 - Never rely on client-side state for privilege checks. Re-evaluate permissions on every incoming request.
+
+---
+
+## Public Repository Protection & Tamper Defense
+
+Public open-source repositories face unique attack vectors from external contributors, automated bots, and supply-chain poisoners.
+
+### 1. Threat Model for Public Repositories
+
+- **Workflow Poisoning**: External PRs modifying `.github/workflows/` to steal secrets, compromise self-hosted runners, or inject cryptominers.
+- **Dependency Tampering**: Injecting malicious typosquatted or poisoned packages into package manifests (`requirements.txt`, `package.json`, `build.gradle.kts`).
+- **Binary & Payload Injection**: Sneaking obfuscated binaries, model weights, or exploits past review into repository assets.
+- **Silent Security Policy Weakening**: Modifying PR templates, branch rules, or security scanning exclusions.
+
+### 2. Mandatory GitHub Repository Settings for Public Repos
+
+1. **Actions Permissions**:
+   - Go to **Settings → Actions → General → Fork pull request workflows**.
+   - Select: **Require approval for first-time contributors** or **Require approval for all outside collaborators**.
+   - Never allow fork PRs to execute arbitrary workflows without review.
+2. **Workflow Permissions**:
+   - Set Default `GITHUB_TOKEN` permissions to **Read repository contents and packages permissions** (read-only).
+   - Require workflows to explicitly request elevated permissions (`pull-requests: write`, etc.) on a per-job basis.
+3. **Safe Use of `pull_request_target`**:
+   - Never run `actions/checkout` with `ref: ${{ github.event.pull_request.head.sha }}` inside a `pull_request_target` workflow.
+   - `pull_request_target` executes in the context of the base branch with repository secret access. Running untrusted fork code in this context allows immediate secret exfiltration.
+
+### 3. Automated Repo Guard & Notification Workflow
+
+Repositories can adopt `templates/workflows/repo-guard.yml` (installed via `./scripts/adopt.sh --guard`) to automate tamper detection:
+
+- **Fork PR Detection**: Automatically identifies if a PR originates from an external fork.
+- **Workflow Protection**: Fails the check immediately and locks execution if an external contributor touches files under `.github/workflows/`.
+- **Sensitive Asset Alerts**: Flags changes to `SECURITY.md`, `CONSTITUTION.md`, `.env*`, or binary files.
+- **Owner Notification**: Comments on the PR tagging the repository owner (`@tlacahuepec`) and sets the `security-review-required` label.
+- **Instant Webhook Alerts**: Optionally sends real-time notifications to a private Discord or Slack channel if `SECURITY_WEBHOOK_URL` is set in repository secrets.
