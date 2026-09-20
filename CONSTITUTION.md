@@ -164,6 +164,9 @@ Ruff + pyright, Docker-first, provider pattern.
 **Android / Kotlin**  
 Jetpack Compose + Material 3, Hilt, Room, Spotless + ktlint + Detekt (mandatory), Git Town.
 
+**Java / JVM**  
+Google Java Format + SpotBugs + Error Prone, JUnit 5 + JaCoCo (≥ 80% coverage), Clean Architecture or Hexagonal, Javadoc on public APIs.
+
 **Artifact / Workflow repositories**  
 Validation-first, reproducibility-first, no committed large binaries or generated output batches, and repository-specific validation scripts.
 
@@ -217,6 +220,9 @@ AI agents (Claude Code, Codex, Copilot, Cursor, Grok, or any other) are held to 
   directory.
 - When Immutable Rules change, all agent instruction templates must be updated
   in the same PR.
+- Any agent or human may **audit** a repository for constitutional compliance
+  using `docs/audit-guide.md`. Audit findings should be filed as issues or a
+  summary PR.
 
 ## 11. Repository Setup & Branch Protection (One-time setup)
 

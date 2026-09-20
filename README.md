@@ -19,6 +19,7 @@ It defines the non-negotiable standards for:
 
 - [Full Constitution](./CONSTITUTION.md)
 - [Technology Extensions](./docs/extensions.md)
+- [Audit Guide](./docs/audit-guide.md)
 - [Contributing Guide](./CONTRIBUTING.md)
 - [Changelog](./CHANGELOG.md)
 

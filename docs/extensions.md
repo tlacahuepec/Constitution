@@ -51,6 +51,29 @@ All rules in the Constitution apply universally. The extensions below add **addi
 
 ---
 
+## Java / JVM
+
+| Category | Standard |
+|----------|----------|
+| Formatter | Google Java Format (preferred) or Checkstyle with Google style |
+| Static Analysis | SpotBugs + Error Prone (mandatory) |
+| Test Framework | JUnit 5 + JaCoCo (minimum 80% coverage) |
+| Build Tool | Gradle (preferred) or Maven with dependency locking |
+| Architecture | Clean Architecture or Hexagonal (ports/adapters) |
+| Dependency Injection | Spring (Boot) or Dagger/Guice |
+
+**CI must include**: `./gradlew spotlessCheck` (or checkstyle), `./gradlew spotbugsMain`, `./gradlew test jacocoTestReport`, `./gradlew build`
+
+**Additional rules**:
+
+- No `@SuppressWarnings` without a team-approved exception documented in the PR.
+- All public API classes and methods must have Javadoc.
+- Use `Optional` instead of returning `null` from public methods.
+- Prefer immutable data structures and records (Java 17+).
+- Use sealed classes/interfaces for closed type hierarchies where applicable.
+
+---
+
 ## Artifact / Workflow / Documentation Repositories
 
 Use this extension for repositories whose main deliverable is not executable production code, including:
