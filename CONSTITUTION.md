@@ -179,16 +179,41 @@ Code is read far more often than it is written. Clean, readable code is non-nego
   - Public APIs, interfaces, and exported functions require docstrings (Javadoc, Python docstrings, JSDoc).
 - **Prohibition on Warning Suppressions**:
   - Never suppress lint warnings, PMD rules, or static analysis findings (no `@SuppressWarnings`, `// noinspection`, `# noqa`, `<!-- markdownlint-disable`, etc.). Fix the root cause.
+- **Technical Debt Management**:
+  - Every `TODO` or `FIXME` comment in code must reference a tracked issue: `TODO(#123): explanation`.
+  - Unreferenced `TODO` or `FIXME` comments are prohibited and must be blocked during code review.
+  - Teams should allocate ≥ 10% of engineering capacity to technical debt reduction and refactoring.
 
-## 6. Security & Secrets
+## 6. Security, Input Validation & Secrets
 
-- Use `.env.example` + GitHub Secrets when environment variables are needed.
-- Enable Dependabot + secret scanning where supported.
-- No secrets in code, documentation, workflow files, prompts, examples, screenshots, or history.
-- Do not commit large model files, generated output batches, private images, credentials, tokens, cookies, browser exports, or local machine paths unless explicitly safe and intentional.
+- **Zero-Tolerance for Secrets**: Never commit secrets, credentials, tokens, or private keys. Use `.env.example` + GitHub Secrets.
+- **Secret Scanning**: Enable Dependabot and automated secret scanning on all repositories.
+- **Input Validation & System Boundaries**:
+  - Never trust external or user-supplied input. All data entering the system (HTTP bodies, query params, headers, CLI arguments, file uploads, message queues) must be validated and sanitized at the boundary (controller, handler, gateway) using type-safe schema validators (e.g. Pydantic, Zod, Jakarta Bean Validation).
+  - Domain logic must receive pre-validated, strongly-typed domain models, never raw strings or unverified payloads.
+  - Input validation failures must immediately return structured 400-series client errors without executing domain logic.
+- **Forbidden Files**: Do not commit large model files, generated output batches, private images, credentials, tokens, cookies, browser exports, or local machine paths unless explicitly safe and intentional.
+- **OWASP Top 10 Compliance**: Follow the mandatory security mitigations in [`docs/security.md`](./docs/security.md).
 
-## 7. Documentation & Architecture Decisions
+## 7. Logging, Error Handling & Architecture Decisions
 
+### Structured Logging Standards
+- Services must use structured JSON logging.
+- Log levels must be semantic:
+  - `DEBUG`: Verbose diagnostic information (disabled in production).
+  - `INFO`: Normal operational events (startup, shutdown, completed significant transactions).
+  - `WARN`: Recoverable issues, degraded performance, or unexpected non-fatal events.
+  - `ERROR`: Unrecoverable errors affecting a request or operation requiring engineer intervention.
+- Every inbound request must be assigned a correlation ID (`X-Correlation-ID` / trace ID) propagated across all log entries.
+- **Prohibition on Sensitive Data in Logs**: Never log passwords, API keys, bearer tokens, cookies, credit card numbers, or personally identifiable information (PII). Redact sensitive fields before writing logs.
+
+### Error Handling Standards
+- Define domain-specific exception hierarchies. Avoid throwing generic `Exception` or `RuntimeException`.
+- Never silently catch exceptions (no empty catch blocks or bare `except:`). Always log or translate errors.
+- API errors must return consistent structured envelopes (RFC 7807 Problem Details recommended).
+- Fail fast on startup if configuration or required dependencies are missing.
+
+### Documentation & Architecture Decisions
 - Clear `README.md`
 - This `CONSTITUTION.md`
 - `docs/` folder when needed

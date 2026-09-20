@@ -20,6 +20,7 @@ It defines the non-negotiable standards for:
 - [Full Constitution](./CONSTITUTION.md)
 - [Technology Extensions](./docs/extensions.md)
 - [Audit Guide](./docs/audit-guide.md)
+- [Security Standards (OWASP Top 10)](./docs/security.md)
 - [Contributing Guide](./CONTRIBUTING.md)
 - [Changelog](./CHANGELOG.md)
 
@@ -29,7 +30,7 @@ It defines the non-negotiable standards for:
 
 ### Automatic Setup
 
-Run the adoption script to install agent instruction files and repository templates into any repo:
+Run the adoption script to install agent instruction files, repository templates, and starter CI workflows into any repo:
 
 ```bash
 git clone https://github.com/tlacahuepec/Constitution.git /tmp/constitution
@@ -41,6 +42,9 @@ git clone https://github.com/tlacahuepec/Constitution.git /tmp/constitution
 
 # Or install only repository templates (PR, Spec, ADR, Checklist, Security)
 /tmp/constitution/scripts/adopt.sh --templates /path/to/your/repo
+
+# Or install starter CI workflow alongside templates (python, java, typescript, vdd)
+/tmp/constitution/scripts/adopt.sh --all --workflow python /path/to/your/repo
 ```
 
 This installs:

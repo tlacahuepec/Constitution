@@ -6,6 +6,7 @@ TEMPLATES_DIR="$SCRIPT_DIR/../templates"
 FORCE=false
 INSTALL_AGENTS=false
 INSTALL_TEMPLATES=false
+WORKFLOW_TYPE=""
 
 usage() {
     echo "Usage: $0 [OPTIONS] <target-repo-path>"
@@ -15,6 +16,7 @@ usage() {
     echo "Options:"
     echo "  -a, --agents       Install only AI agent instruction files"
     echo "  -t, --templates    Install only repository templates (PR, Spec, ADR, Checklist, Security)"
+    echo "  -w, --workflow <type> Install starter CI/CD workflow (python | java | typescript | vdd)"
     echo "  --all              Install both agent files and all templates (default)"
     echo "  -f, --force        Overwrite existing files without prompting"
     echo "  -h, --help         Show this help message"
@@ -31,6 +33,9 @@ usage() {
     echo "  docs/adr/ADR_TEMPLATE.md          (Architecture Decision Record template)"
     echo "  docs/CODE_REVIEW_CHECKLIST.md     (Code review rubric)"
     echo "  SECURITY.md                       (Security policy & vulnerability reporting)"
+    echo ""
+    echo "Starter workflows (-w|--workflow):"
+    echo "  python, java, typescript, vdd"
     exit 0
 }
 
@@ -54,6 +59,7 @@ while [[ $# -gt 0 ]]; do
     case $1 in
         -a|--agents) INSTALL_AGENTS=true; shift ;;
         -t|--templates) INSTALL_TEMPLATES=true; shift ;;
+        -w|--workflow|--workflows) WORKFLOW_TYPE="$2"; shift 2 ;;
         --all) INSTALL_AGENTS=true; INSTALL_TEMPLATES=true; shift ;;
         -f|--force) FORCE=true; shift ;;
         -h|--help) usage ;;
@@ -63,7 +69,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Default to --all if neither --agents nor --templates was explicitly selected
-if [ "$INSTALL_AGENTS" = false ] && [ "$INSTALL_TEMPLATES" = false ]; then
+if [ "$INSTALL_AGENTS" = false ] && [ "$INSTALL_TEMPLATES" = false ] && [ -z "$WORKFLOW_TYPE" ]; then
     INSTALL_AGENTS=true
     INSTALL_TEMPLATES=true
 fi
@@ -103,6 +109,31 @@ if [ "$INSTALL_TEMPLATES" = true ]; then
     copy_file "$TEMPLATES_DIR/ADR_TEMPLATE.md" "$TARGET/docs/adr/ADR_TEMPLATE.md"
     copy_file "$TEMPLATES_DIR/CODE_REVIEW_CHECKLIST.md" "$TARGET/docs/CODE_REVIEW_CHECKLIST.md"
     copy_file "$TEMPLATES_DIR/SECURITY.md" "$TARGET/SECURITY.md"
+    echo ""
+fi
+
+if [ -n "$WORKFLOW_TYPE" ]; then
+    case $WORKFLOW_TYPE in
+        python)
+            echo "--> Installing Python Starter CI Workflow..."
+            copy_file "$TEMPLATES_DIR/workflows/python-ci.yml" "$TARGET/.github/workflows/ci.yml"
+            ;;
+        java)
+            echo "--> Installing Java Starter CI Workflow..."
+            copy_file "$TEMPLATES_DIR/workflows/java-ci.yml" "$TARGET/.github/workflows/ci.yml"
+            ;;
+        typescript|ts|node)
+            echo "--> Installing TypeScript Starter CI Workflow..."
+            copy_file "$TEMPLATES_DIR/workflows/typescript-ci.yml" "$TARGET/.github/workflows/ci.yml"
+            ;;
+        vdd|artifact|docs)
+            echo "--> Installing VDD / Artifact Validation Starter CI Workflow..."
+            copy_file "$TEMPLATES_DIR/workflows/vdd-ci.yml" "$TARGET/.github/workflows/ci.yml"
+            ;;
+        *)
+            echo "Warning: Unknown workflow type '$WORKFLOW_TYPE'. Choose from: python, java, typescript, vdd."
+            ;;
+    esac
     echo ""
 fi
 

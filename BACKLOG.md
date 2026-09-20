@@ -28,10 +28,11 @@ Track progress one story at a time. Mark status as: `TODO`, `IN PROGRESS`, `DONE
 | 11 | Add Code Review Checklist (`templates/CODE_REVIEW_CHECKLIST.md`) | DONE | Reviewer rubric for SOLID, readability, tests |
 | 12 | Add Security Policy Template (`templates/SECURITY.md`) | DONE | Vulnerability reporting and SLAs |
 | 13 | Add Child PR Template (`templates/PULL_REQUEST_TEMPLATE.md`) | DONE | Ready-to-copy dual-path PR template |
-| 14 | Add Technical Debt Management policy | TODO | TODO/FIXME conventions, debt tracking |
-| 15 | Add Input Validation & Sanitization standard | TODO | Schema validation at boundaries |
-| 16 | Add Structured Logging standard | TODO | JSON format, log levels, PII redaction |
-| 17 | Add OWASP Top 10 Security Annex | TODO | `docs/security.md` with mitigations |
+| 14 | Add Technical Debt Management policy | DONE | Mandatory TODO(#123) issue references |
+| 15 | Add Input Validation & Sanitization standard | DONE | Boundary validation, pre-validated domain models |
+| 16 | Add Structured Logging standard | DONE | JSON format, semantic levels, correlation IDs, PII redaction |
+| 17 | Add OWASP Top 10 Security Annex | DONE | Dedicated guide in `docs/security.md` |
+| 18 | Add Starter CI/CD Workflows (`templates/workflows/`) | DONE | Python, Java, TypeScript, and VDD workflows |
 
 ---
 
@@ -39,13 +40,12 @@ Track progress one story at a time. Mark status as: `TODO`, `IN PROGRESS`, `DONE
 
 | # | Story | Status | Notes |
 |---|-------|--------|-------|
-| 13 | Define Test Pyramid — unit/integration/e2e layers | TODO | Coverage thresholds, mocking rules, test naming |
-| 14 | Add Code Review Rubric — `docs/code-review.md` | TODO | Reviewer duties, blocking vs non-blocking, SLA |
-| 15 | Add API Design Standards | TODO | REST conventions, error envelopes (RFC 7807), versioning |
-| 16 | Add Database & Migration Policy | TODO | Versioned migrations, indexing, transaction boundaries |
-| 17 | Add Error Handling Patterns section | TODO | Exception hierarchies, error boundaries, fail-fast |
-| 18 | Add Code Documentation Standards | TODO | Docstring formats, inline comment rules |
-| 19 | Formalize SemVer Versioning Policy | TODO | MAJOR/MINOR/PATCH criteria, deprecation windows |
+| 19 | Define Test Pyramid — unit/integration/e2e layers | TODO | Coverage thresholds, mocking rules, test naming |
+| 20 | Add Code Review Rubric — `docs/code-review.md` | TODO | Reviewer duties, blocking vs non-blocking, SLA |
+| 21 | Add API Design Standards | TODO | REST conventions, error envelopes (RFC 7807), versioning |
+| 22 | Add Database & Migration Policy | TODO | Versioned migrations, indexing, transaction boundaries |
+| 23 | Add Code Documentation Standards | TODO | Docstring formats, inline comment rules |
+| 24 | Formalize SemVer Versioning Policy | TODO | MAJOR/MINOR/PATCH criteria, deprecation windows |
 
 ---
 
@@ -78,3 +78,8 @@ Track progress one story at a time. Mark status as: `TODO`, `IN PROGRESS`, `DONE
 - **Story 11**: Add Code Review Checklist (`templates/CODE_REVIEW_CHECKLIST.md`).
 - **Story 12**: Add Security Policy Template (`templates/SECURITY.md`).
 - **Story 13**: Add Child PR Template (`templates/PULL_REQUEST_TEMPLATE.md`).
+- **Story 14**: Add Technical Debt Management policy (`TODO(#issue)` mandate).
+- **Story 15**: Add Input Validation & System Boundaries standard.
+- **Story 16**: Add Structured JSON Logging, Correlation IDs, and Error Handling standards.
+- **Story 17**: Add OWASP Top 10 Security Annex (`docs/security.md`).
+- **Story 18**: Add Starter CI/CD Workflows (`templates/workflows/` for Python, Java, TypeScript, and VDD) and updated `adopt.sh` with `--workflow`.
