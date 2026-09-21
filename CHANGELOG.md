@@ -4,6 +4,19 @@ All notable changes to the Engineering Constitution will be documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.3.3] - 2026-09-20
+
+### Changed
+
+- **Trunk-Based Development Adoption**: Retired and deleted the `dev` branch for this repository in accordance with Tier 2 Personal Tool standards. All feature branches now branch directly from and target `main` via Pull Requests.
+- **Compliance & Backlog Updates**: Added Story R-7 to `BACKLOG.md` and `COMPLIANCE.md` documenting the exclusion of multi-branch GitFlow for this repository to eliminate double-PR friction and squash-merge lineage divergence.
+
+## [2.3.2] - 2026-09-20
+
+### Added
+
+- **Backlog & Removal Stories Formally Codified**: Synchronized `BACKLOG.md` across Phases 5 through 8, and added Phase 9 codifying Stories R-1 through R-6 per Section 0 Step 5.
+
 ## [2.3.1] - 2026-09-20
 
 ### Added

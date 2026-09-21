@@ -29,7 +29,7 @@ Conducted with repository maintainer (@tlacahuepec) on 2026-09-20:
 | Category | Total Standards | Compliant (✅) | In Progress (🔄) | Backlog (❌) | Exempt (N/A) |
 |----------|:---------------:|:--------------:|:----------------:|:------------:|:------------:|
 | Core & Immutable Rules | 8 | 8 | 0 | 0 | 0 |
-| Branching & Versioning | 3 | 3 | 0 | 0 | 0 |
+| Branching & Versioning | 3 | 2 | 0 | 0 | 1 |
 | Pull Requests & Reviews | 4 | 4 | 0 | 0 | 0 |
 | CI/CD & Deployments | 6 | 4 | 0 | 0 | 2 |
 | Code Quality & Testing | 10 | 5 | 0 | 0 | 5 |
@@ -37,7 +37,7 @@ Conducted with repository maintainer (@tlacahuepec) on 2026-09-20:
 | Refactoring Standards | 8 | 6 | 0 | 0 | 2 |
 | Security & System Boundaries | 3 | 3 | 0 | 0 | 0 |
 | Observability & Architecture | 5 | 2 | 0 | 0 | 3 |
-| **Total** | **53** | **40** | **0** | **0** | **13** |
+| **Total** | **53** | **39** | **0** | **0** | **14** |
 
 ---
 
@@ -48,7 +48,7 @@ Conducted with repository maintainer (@tlacahuepec) on 2026-09-20:
 | # | Standard | Status | Notes / Evidence |
 |---|----------|:------:|------------------|
 | 1 | Verification-First (VDD for artifacts) | ✅ Done | Markdownlint, link checking, YAML validation in CI |
-| 2 | Never push directly to `main` or `dev` | ✅ Done | Branch protection active on GitHub |
+| 2 | Never push directly to `main` | ✅ Done | Branch protection active on GitHub |
 | 3 | Protected branches require PR + CI | ✅ Done | Merges require green checks |
 | 4 | Zero secrets committed | ✅ Done | Gitleaks secret scanner active in CI |
 | 5 | No force-pushes on any branch | ✅ Done | History is immutable once pushed |
@@ -60,9 +60,9 @@ Conducted with repository maintainer (@tlacahuepec) on 2026-09-20:
 
 | Standard | Tier Requirement | Status | Notes |
 |----------|:----------------:|:------:|-------|
-| Branch protection on `main` and `dev` | Mandatory | ✅ Done | GitHub branch protection rules configured |
-| Full GitFlow (`dev` + `main`) | Tier 2: 💡 | ✅ Done | `dev` integration branch + `main` production releases |
-| SemVer 2.0.0 Versioning | Tier 2: 💡 | ✅ Done | Formal releases: `v2.0.0`, `v2.1.0`, `v2.2.0`, `v2.3.0` |
+| Branch protection on `main` | Mandatory | ✅ Done | GitHub branch protection rules configured |
+| Full GitFlow (`dev` + `main`) | Tier 2: 💡 | N/A | Excluded: Trunk-based on protected `main` with feature PRs |
+| SemVer 2.0.0 Versioning | Tier 2: 💡 | ✅ Done | Formal releases: `v2.0.0` through `v2.3.2` |
 
 ### 3. Pull Requests & Reviews
 
@@ -157,3 +157,4 @@ Per Constitution Section 0 Step 5, the following standards are explicitly exclud
 4. **OpenAPI 3.x Specification**: Excluded — The repository does not expose HTTP REST endpoints.
 5. **Incident Management & Post-Mortems**: Excluded — No hosted production services or SLAs.
 6. **Accessibility (WCAG 2.1 AA)**: Excluded — There is no custom web or mobile front-end application code; documents are rendered natively by GitHub's markdown renderer.
+7. **Full GitFlow (`dev` branch)**: Excluded — Per Section 0, GitFlow is optional (💡) for Tier 2 Personal Tools. The repository uses trunk-based development with branch protection on `main` and feature branch PRs. The `dev` branch was deleted to eliminate double-PR friction and squash-merge lineage divergence.
