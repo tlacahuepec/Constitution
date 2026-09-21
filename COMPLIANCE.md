@@ -11,6 +11,19 @@
 
 ---
 
+## Step 1: Classification Interview
+
+Conducted with repository maintainer (@tlacahuepec) on 2026-09-20:
+
+1. **Lifespan**: Permanent foundation repository (not a temporary spike).
+2. **Audience & Scope**: Maintained and run locally by one primary maintainer.
+3. **Dependencies**: Governs organizational engineering standards and starter templates consumed by downstream repositories.
+4. **Visibility & Impact**: Public on GitHub.
+
+**Decision**: Formally designated as **🔧 Tier 2 — Personal Tool (Governance & Standards Repository)**, treating downstream projects as external consumers of these guidelines and templates.
+
+---
+
 ## Compliance Status Summary
 
 | Category | Total Standards | Compliant (✅) | In Progress (🔄) | Backlog (❌) | Exempt (N/A) |
