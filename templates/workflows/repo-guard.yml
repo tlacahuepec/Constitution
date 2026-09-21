@@ -1,3 +1,4 @@
+---
 name: Repo Guard & Tamper Defense
 
 on:
@@ -20,15 +21,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
-          IS_FORK: ${{ github.event.pull_request.head.repo.full_name != github.repository }}
+          IS_FORK: >-
+            ${{ github.event.pull_request.head.repo.full_name !=
+            github.repository }}
           AUTHOR: ${{ github.event.pull_request.user.login }}
           OWNER: ${{ github.repository_owner }}
         run: |
           echo "=== REPO GUARD AUDIT ==="
           echo "PR: #$PR_NUMBER by @$AUTHOR (Fork: $IS_FORK)"
 
-          # Fetch list of changed files via GitHub CLI
-          CHANGED_FILES=$(gh api repos/$REPO/pulls/$PR_NUMBER/files --paginate --jq '.[].filename')
+          CHANGED_FILES=$(gh api \
+            repos/$REPO/pulls/$PR_NUMBER/files \
+            --paginate --jq '.[].filename')
           echo "Changed files:"
           echo "$CHANGED_FILES"
 
@@ -38,19 +42,17 @@ jobs:
 
           while IFS= read -r file; do
             [ -z "$file" ] && continue
-            
-            # Check for workflow tampering
+
             if [[ "$file" =~ ^\.github/workflows/ ]]; then
               TOUCHED_WORKFLOWS=true
             fi
 
-            # Check for security policy tampering
             if [[ "$file" =~ ^(SECURITY\.md|CONSTITUTION\.md|\.env.*) ]]; then
               TOUCHED_SECURITY=true
             fi
 
-            # Check for forbidden binary extensions
-            if [[ "$file" =~ \.(exe|dll|so|dylib|bin|zip|tar|tar\.gz|7z)$ ]]; then
+            BIN_REGEX='\.(exe|dll|so|dylib|bin|zip|tar|tar\.gz|7z)$'
+            if [[ "$file" =~ $BIN_REGEX ]]; then
               TOUCHED_BINARIES=true
             fi
           done <<< "$CHANGED_FILES"
@@ -61,28 +63,45 @@ jobs:
           echo "is_fork=$IS_FORK" >> $GITHUB_OUTPUT
 
       - name: Block Workflow Tampering from Forks
-        if: steps.inspect.outputs.is_fork == 'true' && steps.inspect.outputs.touched_workflows == 'true'
+        if: >-
+          steps.inspect.outputs.is_fork == 'true' &&
+          steps.inspect.outputs.touched_workflows == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
           OWNER: ${{ github.repository_owner }}
         run: |
-          gh pr comment $PR_NUMBER --repo $REPO --body "🚨 **SECURITY BLOCK**: External contributors from forks are not permitted to modify \`.github/workflows/\` files directly. @$OWNER has been notified. This check will fail until workflow changes are removed or explicitly approved by repository owners."
-          gh pr edit $PR_NUMBER --repo $REPO --add-label "security-alert" || true
+          MSG="🚨 **SECURITY BLOCK**: External contributors from forks "
+          MSG+="are not permitted to modify \`.github/workflows/\` files "
+          MSG+="directly. @$OWNER has been notified. This check will fail "
+          MSG+="until workflow changes are removed or approved."
+          gh pr comment $PR_NUMBER --repo $REPO --body "$MSG"
+          gh pr edit $PR_NUMBER \
+            --repo $REPO \
+            --add-label "security-alert" || true
           echo "CRITICAL: External fork modified workflow files!"
           exit 1
 
       - name: Notify Owner of Sensitive File Modifications
-        if: steps.inspect.outputs.is_fork == 'true' && (steps.inspect.outputs.touched_security == 'true' || steps.inspect.outputs.touched_binaries == 'true')
+        if: >-
+          steps.inspect.outputs.is_fork == 'true' &&
+          (steps.inspect.outputs.touched_security == 'true' ||
+           steps.inspect.outputs.touched_binaries == 'true')
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
           OWNER: ${{ github.repository_owner }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
         run: |
-          gh pr comment $PR_NUMBER --repo $REPO --body "⚠️ **SECURITY NOTICE**: @$OWNER — This PR from external contributor @${{ github.event.pull_request.user.login }} modifies sensitive security files or forbidden binary formats. Manual audit required."
-          gh pr edit $PR_NUMBER --repo $REPO --add-label "security-review-required" || true
+          MSG="⚠️ **SECURITY NOTICE**: @$OWNER — This PR from external "
+          MSG+="contributor @$AUTHOR modifies sensitive security files "
+          MSG+="or binary formats. Manual audit required."
+          gh pr comment $PR_NUMBER --repo $REPO --body "$MSG"
+          gh pr edit $PR_NUMBER \
+            --repo $REPO \
+            --add-label "security-review-required" || true
 
       - name: Send Webhook Notification (Discord / Slack)
         if: steps.inspect.outputs.is_fork == 'true' && env.WEBHOOK_URL != ''
@@ -93,6 +112,9 @@ jobs:
           AUTHOR: ${{ github.event.pull_request.user.login }}
           PR_URL: ${{ github.event.pull_request.html_url }}
         run: |
+          PAYLOAD="{\"content\": \"🚨 **Repo Guard Alert**: External PR "
+          PAYLOAD+="[#${PR_NUMBER}](${PR_URL}) opened by \`${AUTHOR}\` "
+          PAYLOAD+="on \`${REPO}\` touched sensitive files. Review required!\"}"
           curl -s -X POST -H "Content-Type: application/json" \
-            -d "{\"content\": \"🚨 **Repo Guard Alert**: External PR [#${PR_NUMBER}](${PR_URL}) opened by \`${AUTHOR}\` on \`${REPO}\` touched sensitive files. Review required!\"}" \
+            -d "$PAYLOAD" \
             "$WEBHOOK_URL" || echo "Webhook notification sent or skipped."
