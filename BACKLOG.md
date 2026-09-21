@@ -63,40 +63,56 @@ Track progress one story at a time. Mark status as: `TODO`, `IN PROGRESS`, `DONE
 
 ---
 
-## Completed
+## Phase 5: Tiered Adoption, Folder Org & Refactoring (v2.1)
 
-- **Story 1**: Fix `CONTRIBUTING.md` — added VDD & SDD support, aligned with Constitution v1.3.
-- **Story 2**: Fix `.github/PULL_REQUEST_TEMPLATE.md` — added dual-path TDD/VDD verification, SOLID check, zero suppressions check, forbidden files check.
-- **Story 3**: Align `templates/AGENTS.md` — added Always section with SOLID principles and test/validation mandates.
-- **Story 4**: Add Gitleaks secret scanning job to `.github/workflows/ci.yml`.
-- **Story 5**: Expand `scripts/adopt.sh` — added modular `--agents`, `--templates`, and `--all` options.
-- **Story 6**: Add SOLID Principles & Code Design standards to `CONSTITUTION.md`.
-- **Story 7**: Add Code Readability & Complexity Limits (≤30 lines/function, ≤300 lines/file, complexity ≤10, nesting ≤3) to `CONSTITUTION.md`.
-- **Story 8**: Add SDD Feature Specification Template (`templates/SPEC_TEMPLATE.md`).
-- **Story 9**: Add ADR Template (`templates/ADR_TEMPLATE.md`) and mandate in `CONSTITUTION.md` Section 7.
-- **Story 10**: Add Standalone Audit Report Template (`templates/AUDIT_REPORT_TEMPLATE.md`).
-- **Story 11**: Add Code Review Checklist (`templates/CODE_REVIEW_CHECKLIST.md`).
-- **Story 12**: Add Security Policy Template (`templates/SECURITY.md`).
-- **Story 13**: Add Child PR Template (`templates/PULL_REQUEST_TEMPLATE.md`).
-- **Story 14**: Add Technical Debt Management policy (`TODO(#issue)` mandate).
-- **Story 15**: Add Input Validation & System Boundaries standard.
-- **Story 16**: Add Structured JSON Logging, Correlation IDs, and Error Handling standards.
-- **Story 17**: Add OWASP Top 10 Security Annex (`docs/security.md`).
-- **Story 18**: Add Starter CI/CD Workflows (`templates/workflows/` for Python, Java, TypeScript, and VDD) and updated `adopt.sh` with `--workflow`.
-- **Story 19**: Define Test Pyramid (unit/integration/e2e layers, AAA pattern, mocking boundaries) in `CONSTITUTION.md`.
-- **Story 20**: Add Code Review Rubric & Guide (`docs/code-review.md`).
-- **Story 21**: Add API Design Standards (REST conventions, status codes, cursor pagination) in `docs/extensions.md`.
-- **Story 22**: Add Database & Migration Policy (versioned migrations, expand-and-contract pattern, indexes) in `docs/extensions.md`.
-- **Story 23**: Add Code Documentation Standards in `CONSTITUTION.md`.
-- **Story 24**: Formalize SemVer 2.0.0 and Deprecation Policy in `CONSTITUTION.md` Section 2.
-- **Story 25**: Add Monitoring & Observability standards (`docs/observability.md`).
-- **Story 26**: Add Accessibility (a11y) standards (WCAG 2.1 AA) in `docs/extensions.md`.
-- **Story 27**: Add Authentication & Authorization standards (OAuth2, OIDC, RBAC) in `docs/security.md`.
-- **Story 28**: Add Data Privacy & PII Handling policy (classification, encryption, masking) in `docs/security.md`.
-- **Story 29**: Add OpenAPI 3.x CI validation mandate in `CONSTITUTION.md`.
-- **Story 30**: Add Incident Management & Blameless Post-Mortem framework (`templates/POST_MORTEM_TEMPLATE.md`).
-- **Story 31**: Add Deployment Strategies (Blue/Green, Canary) & Environment Management in `CONSTITUTION.md`.
+| # | Story | Status | Notes |
+|---|-------|--------|-------|
+| 32 | Add Section 0 Tiered Adoption Guide & Classification Questionnaire | DONE | 4-tier model (T1-T4), 12 flexible / 35 required matrix |
+| 33 | Add Onboarding Plan (Step 5) & Compliance Tracker (Step 6) | DONE | Audit-and-backlog workflow, local COMPLIANCE.md |
+| 34 | Add Codebase & Directory Structure Standards | DONE | Package by feature, Clean Arch, test colocation, depth ≤ 4 |
+| 35 | Add Refactoring & Code Evolution Standards | DONE | Pure PRs, Boy Scout hygiene, Strangler Fig, Rule of Three |
 
 ---
 
-🎉 **ALL 31 EXPANSION STORIES COMPLETED — CONSTITUTION VERSION 2.0 RELEASED!**
+## Phase 6: Public Repo Guard & Tooling (v2.2)
+
+| # | Story | Status | Notes |
+|---|-------|--------|-------|
+| 36 | Add Public Repo Protection & Tamper Defense Guide | DONE | Fork PR threat models and GitHub settings in `docs/security.md` |
+| 37 | Add Repo Guard Workflow (`templates/workflows/repo-guard.yml`) | DONE | Auto-detect fork PRs, block workflow edits, alert owner |
+| 38 | Add Turnkey Compliance Template (`templates/COMPLIANCE_TEMPLATE.md`) | DONE | Full checklist and removal story documentation |
+| 39 | Expand `scripts/adopt.sh` with `--tier` and `--guard` flags | DONE | CLI support for tier setup and Repo Guard installation |
+
+---
+
+## Phase 7: Branch Freshness & Lineage Protocol (v2.3)
+
+| # | Story | Status | Notes |
+|---|-------|--------|-------|
+| 40 | Formalize Branch Freshness & Lineage Protocol in Section 2 | DONE | Pre-branch sync (`git fetch origin`), continuous merge |
+| 41 | Synchronize Agent Instruction Templates | DONE | Step-by-step sync commands in AGENTS, CLAUDE, Copilot, Cursor |
+
+---
+
+## Phase 8: Repository Self-Onboarding (v2.3.1)
+
+| # | Story | Status | Notes |
+|---|-------|--------|-------|
+| 42 | Adopt Constitution v2.3 in `Constitution` repo via `adopt.sh` | DONE | Installed agent suite, security policy, and templates |
+| 43 | Conduct maintainer classification interview | DONE | Documented in `COMPLIANCE.md` designating Tier 2 |
+| 44 | Add cross-platform `.gitattributes` & `.yamllint.yml` | DONE | Enforce LF line endings and workflow formatting |
+
+---
+
+## Phase 9: Tier 2 Excluded Standards (Removal Stories)
+
+Per Constitution Section 0 Step 5, these stories explicitly document and audit why higher-tier standards are excluded for this repository:
+
+| Story | Excluded Standard | Rationale / Exemption Justification | Status |
+|-------|-------------------|-------------------------------------|:------:|
+| **R-1** | **Test Pyramid Ratios (70/20/10)** | Excluded: `Constitution` is a non-executable governance and documentation repo. Verification is strictly governed by **VDD (Validation-Driven Development)** using markdownlint, lychee link checker, YAML validation, and bash syntax checks. | **EXCLUDED** |
+| **R-2** | **Multi-Tier Environments (dev/staging/prod) & Zero-Downtime Deployments** | Excluded: No compiled binaries or running web servers. Releases are delivered directly via GitHub Releases and Git tags. | **EXCLUDED** |
+| **R-3** | **Observability Endpoints (`/healthz`, `/readyz`, Four Golden Signals)** | Excluded: Static documentation and shell scripts only; no persistent daemon or HTTP process. | **EXCLUDED** |
+| **R-4** | **OpenAPI 3.x Specifications** | Excluded: Repository does not expose HTTP REST endpoints. | **EXCLUDED** |
+| **R-5** | **Incident Management & Post-Mortems** | Excluded: No production services or external SLAs. | **EXCLUDED** |
+| **R-6** | **Accessibility (WCAG 2.1 AA)** | Excluded: No custom front-end UI or web application code. | **EXCLUDED** |
