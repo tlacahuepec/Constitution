@@ -50,8 +50,10 @@ Full document: https://github.com/tlacahuepec/Constitution/blob/main/CONSTITUTIO
 
 ## Branch & Commit Conventions
 
+- Always run `git fetch origin` and pull the latest base (`dev` or `main`) before branching.
 - Branch prefix: `feat/`, `fix/`, `hotfix/`, `release/`
-- Commit message: imperative mood, reference issue, < 72 chars
+- Keep feature branches synced with the base branch regularly during development.
+- Commit message: imperative mood, reference issue, < 72 chars.
 - Example: `Add user authentication module (#42)`
 - Never force-push or amend pushed commits.
 

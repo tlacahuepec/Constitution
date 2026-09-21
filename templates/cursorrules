@@ -27,7 +27,9 @@
 
 # Workflow
 - Check README.md for project tier (🧪 T1, 🔧 T2, 🏢 T3, 🚀 T4)
-- Branch from dev using feat/, fix/, hotfix/, or release/ prefix
+- Synchronize base: always git fetch origin and pull latest base (dev or main) before branching
+- Branch using feat/, fix/, hotfix/, or release/ prefix
+- Keep feature branch synced with base regularly during development
 - Commit messages: imperative mood, reference issue, < 72 chars
 - Before pushing: run linter, formatter, tests, and/or validation scripts
 - PR must include: issue link, summary, test or validation plan, checklist

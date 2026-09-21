@@ -34,11 +34,16 @@ Full document: https://github.com/tlacahuepec/Constitution/blob/main/CONSTITUTIO
 
 ## Workflow
 
-- Check `README.md` for project tier (🧪 T1, 🔧 T2, 🏢 T3, 🚀 T4) to align on standards.
-- Branch from `dev` using `feat/`, `fix/`, `hotfix/`, or `release/` prefix.
-- Commit messages: imperative mood, reference issue, < 72 chars.
-- Before pushing: run linter, formatter, tests, and/or validation scripts.
-- PR must include: issue link, summary, test or validation plan, checklist.
+1. **Check Project Tier**: Read `README.md` for project tier (🧪 T1, 🔧 T2, 🏢 T3, 🚀 T4) to align on standards.
+2. **Synchronize Base (Mandatory)**: Before creating any branch, ALWAYS run:
+   - `git fetch origin`
+   - `git checkout <dev or main>` (use `dev` if it exists, or `main` for trunk-based repos)
+   - `git pull origin <dev or main>`
+3. **Branch**: `git checkout -b feat/your-feature` using `feat/`, `fix/`, `hotfix/`, or `release/` prefix.
+4. **Keep Updated**: Regularly merge the integration base into your feature branch while working.
+5. **Commit**: Imperative mood, reference issue, < 72 chars.
+6. **Pre-Push Validation**: Run linter, formatter, tests, and/or validation scripts.
+7. **PR**: Must include issue link, summary, test/validation plan, and checklist.
 
 ## Agent-Specific Rules
 
