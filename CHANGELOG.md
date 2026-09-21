@@ -4,6 +4,15 @@ All notable changes to the Engineering Constitution will be documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.3.1] - 2026-09-20
+
+### Added
+
+- **Repository Self-Onboarding**: Fully adopted Constitution v2.3.0 into `tlacahuepec/Constitution` itself using `scripts/adopt.sh --all --tier 2 --guard .`.
+- **Compliance Tracker (`COMPLIANCE.md`)**: Completed baseline audit of this repository across all 53 standards (40 compliant, 13 exempt) with documented removal stories for non-executable artifacts.
+- **Repository Artifacts**: Installed `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, `.github/copilot-instructions.md`, `SECURITY.md`, `docs/CODE_REVIEW_CHECKLIST.md`, and Repo Guard workflow (`.github/workflows/repo-guard.yml`).
+- **Cross-Platform Normalization (`.gitattributes`)**: Added `.gitattributes` to enforce LF line endings on shell scripts and workflows, resolving Windows CRLF execution issues in `scripts/adopt.sh`.
+
 ## [2.3.0] - 2026-09-20
 
 ### Added
