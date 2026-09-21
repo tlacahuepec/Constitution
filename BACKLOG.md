@@ -116,3 +116,4 @@ Per Constitution Section 0 Step 5, these stories explicitly document and audit w
 | **R-4** | **OpenAPI 3.x Specifications** | Excluded: Repository does not expose HTTP REST endpoints. | **EXCLUDED** |
 | **R-5** | **Incident Management & Post-Mortems** | Excluded: No production services or external SLAs. | **EXCLUDED** |
 | **R-6** | **Accessibility (WCAG 2.1 AA)** | Excluded: No custom front-end UI or web application code. | **EXCLUDED** |
+| **R-7** | **Full GitFlow (`dev` branch)** | Excluded: Per Section 0, GitFlow is optional (💡) for Tier 2 Personal Tools. The repository uses trunk-based development on protected `main` with feature PRs, eliminating double-PR friction and squash-merge lineage divergence. | **EXCLUDED** |
